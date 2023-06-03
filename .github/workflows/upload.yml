@@ -40,7 +40,6 @@ jobs:
           if_key_exists: replace
       - name: Copy files
         run: |
-          cd dist
           sftp oyhrbqc@ftp.cluster029.hosting.ovh.net:/home/oyhrbqc/www/linkfree << EOF
             rm *
             put -r api.php
