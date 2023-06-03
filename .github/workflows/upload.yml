@@ -39,4 +39,9 @@ jobs:
             identityfile ~/.ssh/id_ed25519
           if_key_exists: replace
       - name: copy files
-        run: scp -rpv . ovh-hosting:www/linkfree/
+        run: |
+          sftp oyhrbqc@ftp.cluster029.hosting.ovh.net:/home/oyhrbqc/www/linkfree << EOF
+            rm *
+            put -r .
+          EOF
+
