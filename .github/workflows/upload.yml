@@ -38,5 +38,5 @@ jobs:
             port 22
             identityfile ~/.ssh/id_ed25519
           if_key_exists: replace
-      - name: rsync over SSH
-        run: rsync -rv --delete ./ ovh-hosting:www/linkfree/
+      - name: copy files
+        run: scp -rpv . ovh-hosting:www/linkfree/
