@@ -38,8 +38,13 @@ jobs:
             port 22
             identityfile ~/.ssh/id_ed25519
           if_key_exists: replace
-      - name: copy files
+      - name: Build app
         run: |
+          mkdir dist
+          cp ./* dist/
+      - name: Copy files
+        run: |
+          cd dist
           sftp oyhrbqc@ftp.cluster029.hosting.ovh.net:/home/oyhrbqc/www/linkfree << EOF
             rm *
             put -r .
