@@ -36,7 +36,7 @@ jobs:
             hostname ftp.cluster029.hosting.ovh.net
             user oyhrbqc
             port 22
-            identityfile id_ed25519
+            identityfile ~/.ssh/id_ed25519
           if_key_exists: replace
       - name: rsync over SSH
         run: rsync -rv --delete ./ ovh-hosting:www/linkfree/
