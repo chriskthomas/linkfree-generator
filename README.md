@@ -1,4 +1,4 @@
-# linkfree-generator
+# LinkFree Generator
 
 ![Screenshot](./screenshot.png)
 
