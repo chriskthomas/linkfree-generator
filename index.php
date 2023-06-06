@@ -111,9 +111,10 @@ $lastsite_index = count($sites) - 1;
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
 <?php if ($num_clinks < 50) {?>
-        <a class="btn btn-secondary" href="?n=<?=$num_clinks + 1?>" role="button">Add Custom Link</a>
+        <a class="btn btn-secondary" data-index="<?=($lastsite_index + $num_clinks)?>" role="button">Add Custom Link</a>
 <?php }?>
       </form>
     </div>
+    <script src="./index.js"></script>
 </body>
 </html>
