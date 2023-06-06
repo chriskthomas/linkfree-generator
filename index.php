@@ -27,13 +27,7 @@ $sites = [
     ],
 ];
 
-if (empty($_GET["n"])) {
-    $num_clinks = 3;
-} elseif ($_GET["n"] <= 50) {
-    $num_clinks = $_GET["n"];
-} else {
-    $num_clinks = 3;
-}
+$num_clinks = 3;
 
 $lastsite_index = count($sites) - 1;
 ?>
