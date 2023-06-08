@@ -5,10 +5,25 @@
 
 app = "linkfree"
 primary_region = "iad"
+kill_signal = "SIGQUIT"
 
 [http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
+internal_port = 8080
+force_https = false
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 1
+[http_service.concurrency]
+type = "requests"
+soft_limit = 200
+hard_limit = 1024
+
+[checks]
+[checks.http_check]
+grace_period = "30s"
+interval = "15s"
+method = "get"
+path = "/"
+port = 8080
+timeout = "10s"
+type = "http"
