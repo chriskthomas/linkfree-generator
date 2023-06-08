@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,32 +22,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_ed25519 # optional
-          known_hosts: |
-            ftp.cluster029.hosting.ovh.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNRHIUr16MAqfE7FCijkY+M0PJYmgtjuraB2qE4F1f3SVcTuJyB/4YZpkX6CN0vl8rzP5Mo+c2/jT33afewvhqkgZgGR5J1FwU+yJXqR8CKLO0BW++3Av4azcc0a/5E6H/eXu6dJga1Suw9FF0/K7Wa2ENxMjvKKj0OnXgmwxt/N2jHldZslg2srYYQ14roO0Kyy72nJ84mBnocHBxY/xxch7zERQY8su3YH9YclmS3bCWnr8e+rCZSLRGuu29CeqeOLdd0cWq5GimMTWUv7SxJ5Mrrf7bzKM9VgnF5h9hLxKZZxRSP0H7iHUCFo35TtROjMvADjuxOyzgiOX8xuXrUrDCd4Air+D/AG0+xdRUF1P2x2Tt1pgMooPGqETCzLV/RXIKanCDhaFqPp9OnjneIq7GNKh0qiWXK0OxLu30p0DZWluk4kLOVCv8vMmFRv7e3uBCB/w13l7eloTnbY1qZHkOTym30BbN5HHXovl31aLqMB5fUSXdDvEx6g9cPH9ofAx/DY6EJ3i8xa7lSnu27zzWh9RNc1cKBEs4QldzH9ZGn2yHrY3DL1ZDqSG9+4sMoaStKC/cJyWjivyQJoXUMznndkRCdFXTx6WdaqzHVwWpqIqQXNDv3fcIZCf3hWH+3gTOkF3SoCoWGZY1vmihVRRh3ob5dSyPTeP1sdfEoQ==
-            ftp.cluster029.hosting.ovh.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPHzGPnvg+XUpaMELjQ4AIj/6pkjvvHYCUxDVpcdaC8T
-          config: |
-            Host ovh-hosting
-            hostname ftp.cluster029.hosting.ovh.net
-            user oyhrbqc
-            port 22
-            identityfile ~/.ssh/id_ed25519
-          if_key_exists: replace
       - name: Run build.sh
         run: ./build.sh
-      - name: Copy files
-        run: |
-          cd ./dist
-          sftp oyhrbqc@ftp.cluster029.hosting.ovh.net:/home/oyhrbqc/www/linkfree << EOF
-            rm *
-            put api.php
-            put index.html
-            put style.css
-            put index.js
-          EOF
-
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy to fly.io
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
