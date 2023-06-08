@@ -22,8 +22,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - name: Run build.sh
-        run: ./build.sh
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to fly.io
         run: flyctl deploy --remote-only
