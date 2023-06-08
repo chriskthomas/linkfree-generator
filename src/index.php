@@ -31,6 +31,7 @@ $num_clinks = 3;
 
 $lastsite_index = count($sites) - 1;
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -93,6 +94,53 @@ $lastsite_index = count($sites) - 1;
           </div>
         </div>
 <?php }?>
+        <div class="mb-3">
+          <label for="theme" class="form-label"><span style="font-weight: 500;">Select Template</span></label>
+          <select id="theme" name="theme" class="form-select">
+            <?php
+            $themes = [
+              "3D Theme",
+              "A mocha, please! (Netlify Form)",
+              "Arcade",
+              "ArghMyEyes",
+              "Art",
+              "BeldiTheme",
+              "CasualBlue",
+              "Cherry-Bloosm",
+              "DarkMode",
+              "DeepSea",
+              "draculaTheme",            
+              "FavouriteTeacherTheme",
+              "GameOn",
+              "GoGreen",
+              "Gridthetic",
+              "Journal",
+              "MagicalMysteryTheme",
+              "Music",
+              "Neon",
+              "Neumorphism",
+              "Nightmare",
+              "NyanCat",
+              "Outrun",
+              "Pastel Dreams",
+              "Pink",
+              "Pride",
+              "PurpleSideOfTheForce",
+              "RedZone",
+              "Retro Game",
+              "Shades Of Purple",
+              "Sixties",
+              "Sky",
+              "Standard"
+            ];
+
+            foreach ($themes as $theme) {
+              echo "<option value=\"$theme\">$theme</option>";
+            }
+            ?>
+          </select>
+        </div>
+
         <div class="mb-3">
           <div class="form-text">
             For custom links, you may use <a href="https://forkaweso.me/Fork-Awesome/icons/">any icon name from Fork-Awesome</a>. For example, <code>mastodon</code>. Icon field may be left blank.

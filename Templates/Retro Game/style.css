@@ -1,0 +1,68 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 15px;
+  background-image: url('https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif');
+}
+#userName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: wheat;
+  font-size: 15px;
+  background-color: black;
+  height: 50px; /* Adjust the height as needed */
+  margin: 0 auto; /* Add this line */
+}
+
+#userPhoto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+}
+
+.container {
+	text-align: center;
+  }
+  p {
+  padding: 14px;
+  display: inline-block;
+  background-color: #9466FF;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 1px;
+  transition: ease all 0.3s;
+  color: #FFF;
+  margin: 14px 0;
+}
+.link {
+  padding: 14px;
+  display: block;
+  background-color: #9466FF;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: ease all 0.3s;
+  color: #FFF;
+  margin: 14px 0;
+}
+.link:hover {
+  opacity: 0.9;
+  background-color: #170fff;
+}
+.card {
+  padding: 10px;
+  background-color: #FFF;
+  border-radius: 4px;
+}
+.card h3 {
+  margin: 0;
+  color: #202024;
+}
+.card p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #202024;
+}
