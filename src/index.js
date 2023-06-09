@@ -72,3 +72,49 @@ addClinkBtn.addEventListener("click", (e) => {
   let lastClink = document.querySelector(`form div:nth-child(${index + 5})`);
   lastClink.after(newClink);
 });
+
+// New beginnings:
+
+const saveInfo = () => {
+  let inputs = document.querySelectorAll("input");
+
+  inputs.forEach((input) => {
+    if (input.type !== "hidden") {
+      window.localStorage.setItem(input.name, input.value);
+    }
+  });
+};
+
+const submitBtn = document.querySelector("button");
+submitBtn.addEventListener("click", () => {
+  if (window.localStorage.length !== 0) {
+    window.localStorage.clear;
+  }
+  saveInfo();
+});
+
+window.addEventListener("unload", () => {
+  saveInfo();
+});
+
+// window.addEventListener("load", () => {
+//   existingItemsCount = window.localStorage.length;
+
+//   if (existingItemsCount !== 0) {
+//     for (let i = 0; i < inputs.length - existingItemsCount; i++) {
+//       addClinkBtn.click();
+//     }
+//   }
+
+//   let inputs = Array.from(document.querySelectorAll("inputs"));
+//   const localItems = [];
+//   window.localStorage.forEach((item) => {
+//     localItems.push(item);
+//   });
+
+//   for (let i = 0; i < existingItemsCount; ) {
+//     localItems.forEach((item) => {
+//       //
+//     });
+//   }
+// });
