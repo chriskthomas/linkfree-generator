@@ -2,6 +2,12 @@
     // get the comment from the POST
     $description = $_POST["description"];
     $links = $_POST["links"];
+    // Create theme object
+    if (!empty($_POST["theme"])) {
+        $theme = json_decode($_POST["theme"], true);
+    } else {
+        $theme = array();
+    }
 } else {
     http_response_code(405);
     header('allow: POST');
@@ -29,8 +35,8 @@ if (!isset($_POST["ispreview"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title><?=$_POST["name"]?></title>
-    <?php if (!empty($_POST["theme"])) {?>
-    <link rel="stylesheet" href="<?="{$_POST["themes-source"]}/{$_POST["theme"]}"?>">
+    <?php if (!empty($theme["css"])) {?>
+    <link rel="stylesheet" href="<?="{$_POST["themes-source"]}/{$theme["css"]}"?>">
     <?php } else {?>
     <style><?php include "default.css"; ?></style>
     <?php }?>
@@ -61,6 +67,9 @@ if (!isset($_POST["ispreview"])) {
         <a class="link" href="mailto:<?=$_POST["email"]?>" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
         <?php }?>
     </div>
+    <?php if (!empty($theme["js"])) {?>
+    <script src="<?="{$_POST["themes-source"]}/{$theme["js"]}"?>"></script>
+    <?php }?>
 
 </body>
 </html>

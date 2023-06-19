@@ -104,7 +104,7 @@ $lastsite_index = count($sites) - 1;
         <select id="theme" name="theme" class="form-select">
           <option value="" selected>Default</option>
 <?php foreach ($themes as $key => $theme) {?>
-          <option value="<?=$theme['css']?>"><?=$theme['name']?></option>
+          <option value="<?=htmlspecialchars(json_encode($theme))?>"><?=$theme['name']?></option>
 <?php }?>
         </select>
         <input type="hidden" id="themes-source" name="themes-source" value="<?=$themes_source?>">
