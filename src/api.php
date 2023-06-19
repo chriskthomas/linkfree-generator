@@ -45,7 +45,7 @@ if (!isset($_POST["ispreview"])) {
     <a href="<?=(!empty($_POST["url"]) ? $_POST["url"] : ".")?>" id="userName"><?=$_POST["name"]?></a>
 
     <?php if (!empty($_POST["description"])) {?>
-    <p><?=$_POST["description"]?></p>
+    <p id="description"><?=$_POST["description"]?></p>
     <?php }?>
 
     <div id="links">
