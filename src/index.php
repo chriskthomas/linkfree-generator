@@ -102,6 +102,7 @@ $lastsite_index = count($sites) - 1;
       <div class="mb-3">
         <label for="theme" class="form-label"><span style="font-weight: 500;">Select Template</span></label>
         <select id="theme" name="theme" class="form-select">
+          <option value="" selected>Default</option>
 <?php foreach ($themes as $key => $theme) {?>
           <option value="<?=$theme['css']?>"><?=$theme['name']?></option>
 <?php }?>
