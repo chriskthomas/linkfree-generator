@@ -125,6 +125,10 @@ $lastsite_index = count($sites) - 1;
         <a class="btn btn-secondary" data-index="<?=($lastsite_index + $num_clinks)?>" role="button">Add Custom Link</a>
 <?php }?>
     </form>
+    <p>This project is supported by:</p>
+    <a href="https://m.do.co/c/8bd90b1b884d">
+      <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+    </a>
   </div>
   <script src="./index.js"></script>
 </body>
