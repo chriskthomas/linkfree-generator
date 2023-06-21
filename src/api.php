@@ -48,7 +48,9 @@ if (!isset($_POST["ispreview"])) {
     <img id="userPhoto" src="<?=$user_photo?>" alt="User Photo">
     <?php }?>
 
-    <a href="<?=(!empty($_POST["url"]) ? $_POST["url"] : ".")?>" id="userName"><?=$_POST["name"]?></a>
+    <a href="<?=(!empty($_POST["url"]) ? $_POST["url"] : ".")?>">
+        <h1 id="userName"><?=$_POST["name"]?></h1>
+    </a>
 
     <?php if (!empty($_POST["description"])) {?>
     <p id="description"><?=$_POST["description"]?></p>
