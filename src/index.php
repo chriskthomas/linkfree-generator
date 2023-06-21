@@ -1,5 +1,5 @@
 <?php
-$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@0.1.0";
+$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@0.1.1";
 
 $sites = [
   [
