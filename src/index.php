@@ -131,14 +131,16 @@ $lastsite_index = count($sites) - 1;
     </a>
   </div>
   <footer class="my-4 py-3 border-top">
-    <p class="text-center text-secondary m-0">
-      <a href="https://github.com/chriskthomas/linkfree-generator" rel="self">Open source software</a>
-      by
-      <a href="https://chriskthomas.com" rel="author">Chris K. Thomas</a>
-      and other contributors:
-      <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
-      <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
-    </p>
+    <div class="container">
+      <p class="text-center text-secondary m-0">
+        <a href="https://github.com/chriskthomas/linkfree-generator" rel="self">Open source software</a>
+        by
+        <a href="https://chriskthomas.com" rel="author">Chris K. Thomas</a>
+        and other contributors:
+        <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
+        <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
+      </p>
+    </div>
   </footer>
   <script src="./index.js"></script>
 </body>
