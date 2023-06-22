@@ -49,7 +49,7 @@ $lastsite_index = count($sites) - 1;
   <div class="container my-3">
     <h1>Create your own LinkFree!</h1>
     <p>
-      Fill out this form to generate your own single page website. All fields are optional except for your name. So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code> file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel, or Netlify.
+      Fill out this form to generate your own single page website. All fields are optional except for your name. So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code> file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or DigitalOcean Apps.
     </p>
     <form class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
       <div class="mb-3">
@@ -130,6 +130,16 @@ $lastsite_index = count($sites) - 1;
       <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
     </a>
   </div>
+  <footer class="my-4 py-3 border-top">
+    <p class="text-center text-secondary m-0">
+      <a href="https://github.com/chriskthomas/linkfree-generator" rel="self">Open source software</a>
+      by
+      <a href="https://chriskthomas.com" rel="author">Chris K. Thomas</a>
+      and other contributors:
+      <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
+      <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
+    </p>
+  </footer>
   <script src="./index.js"></script>
 </body>
 </html>
