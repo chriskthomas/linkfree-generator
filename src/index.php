@@ -99,6 +99,14 @@ $lastsite_index = count($sites) - 1;
             </div>
           </div>
 <?php }?>
+<?php if ($num_clinks < 50) {?>
+        <a class="btn btn-secondary mb-2" data-index="<?=($lastsite_index + $num_clinks)?>" role="button">+ Add Additional Link</a>
+<?php }?>
+      <div class="mb-3">
+        <div class="form-text">
+          For custom links, you may use <a href="https://forkaweso.me/Fork-Awesome/icons/">any icon name from Fork-Awesome</a>. For example, <code>mastodon</code>. Icon field may be left blank.
+        </div>
+      </div>
       <div class="mb-3">
         <label for="theme" class="form-label"><span style="font-weight: 500;">Select Template</span></label>
         <select id="theme" name="theme" class="form-select">
@@ -109,21 +117,12 @@ $lastsite_index = count($sites) - 1;
         </select>
         <input type="hidden" id="themes-source" name="themes-source" value="<?=$themes_source?>">
       </div>
-
-      <div class="mb-3">
-        <div class="form-text">
-          For custom links, you may use <a href="https://forkaweso.me/Fork-Awesome/icons/">any icon name from Fork-Awesome</a>. For example, <code>mastodon</code>. Icon field may be left blank.
-        </div>
-      </div>
       <div class="mb-3 form-check">
         <input type="checkbox" id="ispreview" name="ispreview" class="form-check-input">
         <label for="ispreview" class="form-check-label">Preview?</label>
         <span class="form-text">Make a preview instead of downloading file.</span>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
-<?php if ($num_clinks < 50) {?>
-        <a class="btn btn-secondary" data-index="<?=($lastsite_index + $num_clinks)?>" role="button">Add Custom Link</a>
-<?php }?>
     </form>
     <p>This project is supported by:</p>
     <a href="https://m.do.co/c/8bd90b1b884d">
