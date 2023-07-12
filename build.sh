@@ -5,9 +5,9 @@ rm -rf dist
 
 # Build
 mkdir dist
-php src/index.php >dist/index.html
+php src/index.php | minify --type html -o dist/index.html
+minify -o dist/default.css src/default.css
+minify -o dist/index.js src/index.js
 
 # Copy other assets
-cp src/style.css dist/style.css
-cp src/index.js dist/index.js
 cp src/api.php dist/api.php

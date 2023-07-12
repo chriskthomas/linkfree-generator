@@ -14,7 +14,7 @@ Thank you for your interest in contributing to this project! We are always looki
 6. Push your work back up to your fork
 7. Submit a Pull request so that we can review your changes
 
-NOTE: Be sure to merge the latest from "upstream" before making a pull request!
+Please make pull requests to the `main` branch (which is the default). Once merged, contributors can test updates on [linkfree.fly.dev](https://linkfree.fly.dev). If everything looks good, we can sync the new changes to the production branch which deploys to [linkfree.ckt.im](https://linkfree.ckt.im).
 
 ## Code of Conduct
 

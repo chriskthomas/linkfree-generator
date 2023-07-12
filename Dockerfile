@@ -6,7 +6,7 @@ COPY --chmod=0755 build.sh /build.sh
 # Build website
 RUN set -x \
     && apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y php-cli minify \
+    && apt-get install --no-install-recommends --no-install-suggests -y php-cli minify ca-certificates \
     && /build.sh
 
 #| Main Container
