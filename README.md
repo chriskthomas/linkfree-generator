@@ -13,6 +13,7 @@ After generating your `index.html` file, you can follow the instructions below t
 
 - Host your website on [`Github Pages`](https://github.com/chriskthomas/linkfree-generator/blob/main/docs/GitHub-Pages.md)
 - Host your website on [`Netlify`](https://github.com/chriskthomas/linkfree-generator/blob/main/docs/Netlify.md)
+
 This project is supported by:
 
 <a href="https://m.do.co/c/8bd90b1b884d">
