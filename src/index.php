@@ -70,7 +70,7 @@ $lastsite_index = count($sites) - 1;
       <div class="mb-3">
         <label for="photo" class="form-label">Photo</label>
         <input type="file" id="photo" name="photo" class="form-control">
-          <div class="form-text">Make it small and square (about 220x220px). It will be embedded into the page (optional, max 2mb).</div>
+        <div class="form-text">Make it small and square (about 220x220px). It will be embedded into the page (optional, max 2mb).</div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
@@ -115,6 +115,9 @@ $lastsite_index = count($sites) - 1;
           <option value="<?=htmlspecialchars(json_encode($theme))?>"><?=$theme['name']?></option>
 <?php }?>
         </select>
+        <div class="form-text">
+          You can <a href="https://chriskthomas.github.io/linkfree-themes/">preview themes here</a>.
+        </div>
         <input type="hidden" id="themes-source" name="themes-source" value="<?=$themes_source?>">
       </div>
       <div class="mb-3 form-check">
