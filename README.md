@@ -11,8 +11,8 @@ The generator produces a single `index.html` file which can easily be uploaded t
 ## Host your website online for free
 After generating your `index.html` file, you can follow the instructions below to host your website online for free. 
 
-- Host your website on [Github Pages](./docs/GitHub-Pages.md)
-- Host your website on [Netlify](./docs/Netlify.md)
+- Host your website on [Github Pages](./docs/github-pages.md)
+- Host your website on [Netlify](./docs/netlify.md)
 
 This project is supported by:
 
