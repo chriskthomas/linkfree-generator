@@ -66,7 +66,9 @@ if (!isset($_POST["ispreview"])) {
         </a>
         <?php }}?>
         <?php if (!empty($_POST["email"])) {?>
+        <!--email_off-->
         <a class="link" href="mailto:<?=$_POST["email"]?>" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
+        <!--/email_off-->
         <?php }?>
     </div>
     <?php if (!empty($theme["js"])) {?>
