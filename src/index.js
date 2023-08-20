@@ -1,31 +1,68 @@
-// List of all the custom link fields that should not be saved to localStorage
-const localStorageFormNamesIgnore = ["photo"];
+const localStorageIgnore = ["photo"];
 
-const addClinkBtn = document.querySelector("a.btn");
+const addCustomLinkButton = document.querySelector("a.btn");
+const form = document.querySelector("form");
 
-let index = Number(addClinkBtn.dataset.index);
+let linksIndex = Number(addCustomLinkButton.dataset.index);
 
-addClinkBtn.addEventListener("click", (e) => {
-  index++;
+// Functions
 
-  /* The hierarchy of nodes/tags in the custom link fields HTML:
-  div (outer i.e., newClick)
-    label
-    div (row)
-      div1 (inner)
-        input (Name)
-        input (Icon)
-      div2 (inner)
-        input (Link/url)
-  */
+/**
+ * Create a custom link field
+ * @param {string} name The name of the field
+ * @returns {HTMLInputElement} The created field
+ * @example
+ * createLinkField("name");
+ * // <input id="links[0][name]" name="links[0][name]" type="text" class="form-control" placeholder="Name" aria-placeholder="Name">
+ * createLinkField("url");
+ * // <input id="links[0][url]" name="links[0][url]" type="text" class="form-control" placeholder="Link" aria-placeholder="Link">
+ */
+function createLinkField(name) {
+  let field = document.createElement("input");
+
+  field.id = `links[${linksIndex}][${name}]`;
+  field.name = `links[${linksIndex}][${name}]`;
+  field.type = "text";
+  field.className = "form-control";
+
+  if (name != "url") {
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    field.placeholder = name;
+    field.ariaPlaceholder = name;
+  } else {
+    field.placeholder = "Link";
+    field.ariaPlaceholder = "Link";
+  }
+
+  return field;
+}
+
+/**
+ * Append custom link fields to the form
+ *
+ * Based on the following hierarchy of nodes in the custom link fields:
+ *
+ * ```
+ * div (outer i.e., newClick)
+ *  label
+ *    div (row)
+ *      div1 (inner)
+ *        input (Name)
+ *        input (Icon)
+ *      div2 (inner)
+ *        input (Link/url)
+ * ```
+ */
+function createCustomLinkFields() {
+  linksIndex++;
 
   // Creating the elements:
-  let newClink = document.createElement("div"); // div (outer)
-  newClink.className = "mb-3";
+  let newCustomLink = document.createElement("div"); // div (outer)
+  newCustomLink.className = "mb-3";
 
   let label = document.createElement("label"); // label
   label.className = "form-label";
-  label.appendChild(document.createTextNode(`Custom Link #${index - 4}`));
+  label.appendChild(document.createTextNode(`Custom Link #${linksIndex - 4}`));
 
   let row = document.createElement("div"); // div (row)
   row.setAttribute("class", "row g-2");
@@ -33,34 +70,13 @@ addClinkBtn.addEventListener("click", (e) => {
   let div1 = document.createElement("div"); // div1 (inner)
   div1.setAttribute("class", "input-group col-sm");
 
-  const createField = (fieldName) => {
-    // function to create input fields
-    let field = document.createElement("input");
-
-    field.id = `links[${index}][${fieldName}]`;
-    field.name = `links[${index}][${fieldName}]`;
-    field.type = "text";
-    field.className = "form-control";
-
-    if (fieldName != "url") {
-      fieldName = fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
-      field.placeholder = fieldName;
-      field.ariaPlaceholder = fieldName;
-    } else {
-      field.placeholder = "Link";
-      field.ariaPlaceholder = "Link";
-    }
-
-    return field;
-  };
-
-  let nameField = createField("name"); // input (Name)
-  let iconField = createField("icon"); // input (Icon)
+  let nameField = createLinkField("name"); // input (Name)
+  let iconField = createLinkField("icon"); // input (Icon)
 
   let div2 = document.createElement("div"); // div2 (inner)
   div2.setAttribute("class", "col-sm-7 col-md-8 col-xl-9");
 
-  let urlField = createField("url"); // input (Link/url)
+  let urlField = createLinkField("url"); // input (Link/url)
 
   // Creating the final component:
   div2.appendChild(urlField);
@@ -71,18 +87,26 @@ addClinkBtn.addEventListener("click", (e) => {
   row.appendChild(div1);
   row.appendChild(div2);
 
-  newClink.appendChild(label);
-  newClink.appendChild(row);
+  newCustomLink.appendChild(label);
+  newCustomLink.appendChild(row);
 
-  let lastClink = document.querySelector(`form div:nth-child(${index + 5})`);
-  lastClink.after(newClink);
-});
+  let lastCustomLink = document.querySelector(
+    `form div:nth-child(${linksIndex + 5})`
+  );
+  lastCustomLink.after(newCustomLink);
+}
 
-// Save all form input values to localStorage on submit
-const form = document.querySelector("form");
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
+/**
+ * Save all form input values to localStorage
+ * @example
+ * saveFormToLocalStorage(form);
+ * // localStorage.getItem("form");
+ * // {
+ * //   "name": "John Doe",
+ * //   "email": "john.doe@example",
+ * // }
+ */
+function saveFormToLocalStorage() {
   const formData = new FormData(form);
 
   const data = Object.fromEntries(formData.entries());
@@ -93,18 +117,48 @@ form.addEventListener("submit", (e) => {
   });
 
   localStorage.setItem("form", JSON.stringify(data));
+}
 
+/**
+ * Load all form input values from localStorage
+ * @example
+ * loadFormFromLocalStorage();
+ * // localStorage.getItem("form");
+ * // {
+ * //   "name": "John Doe",
+ * //   "email": "john.doe@example",
+ * // }
+ * // form
+ * // <form>
+ * //   <input name="name" value="John Doe">
+ * //   <input name="email" value="john.doe@example">
+ * // </form>
+ */
+function loadFormFromLocalStorage() {
+  const data = JSON.parse(localStorage.getItem("form"));
+  if (data) {
+    Object.keys(data).forEach((key) => {
+      const input = document.querySelector(`[name="${key}"]`);
+
+      if (input) {
+        input.value = data[key];
+      }
+    });
+  }
+}
+
+// Event listeners
+
+addCustomLinkButton.addEventListener("click", () => {
+  createCustomLinkFields();
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  saveFormToLocalStorage();
   form.submit();
 });
 
-// Load all form input values from localStorage
-const data = JSON.parse(localStorage.getItem("form"));
-if (data) {
-  Object.keys(data).forEach((key) => {
-    const input = document.querySelector(`[name="${key}"]`);
-
-    if (input) {
-      input.value = data[key];
-    }
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  loadFormFromLocalStorage();
+});
