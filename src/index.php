@@ -128,6 +128,7 @@ $lastsite_index = count($sites) - 1;
         <span class="form-text">Make a preview instead of downloading file.</span>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <a id="clear" class="btn btn-danger" role="button">Clear</a>
     </form>
     <p>This project is supported by:</p>
     <a href="https://m.do.co/c/8bd90b1b884d">

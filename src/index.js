@@ -1,6 +1,7 @@
 const localStorageIgnore = ["photo"];
 
 const addCustomLinkButton = document.querySelector("a.btn");
+const clearButton = document.querySelector("a.btn-danger");
 const form = document.querySelector("form");
 
 let linksIndex = Number(addCustomLinkButton.dataset.index);
@@ -160,6 +161,11 @@ function loadFormFromLocalStorage() {
 
 addCustomLinkButton.addEventListener("click", () => {
   createCustomLinkFields();
+});
+
+clearButton.addEventListener("click", () => {
+  localStorage.removeItem("form");
+  window.location.reload();
 });
 
 form.addEventListener("submit", (e) => {
