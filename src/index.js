@@ -131,8 +131,8 @@ function saveFormToLocalStorage() {
  * // }
  * // form
  * // <form>
- * //   <input name="name" value="John Doe">
- * //   <input name="email" value="john.doe@example">
+ * //   <input aria-label="Name" name="name" value="John Doe">
+ * //   <input aria-label="Email" name="email" value="john.doe@example">
  * // </form>
  */
 function loadFormFromLocalStorage() {
