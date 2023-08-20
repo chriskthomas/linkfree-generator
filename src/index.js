@@ -138,7 +138,16 @@ function loadFormFromLocalStorage() {
   const data = JSON.parse(localStorage.getItem("form"));
   if (data) {
     Object.keys(data).forEach((key) => {
-      const input = document.querySelector(`[name="${key}"]`);
+      let input = document.querySelector(`[name="${key}"]`);
+
+      // If the input is a link that doesnt exist, create it
+      if (key.startsWith("links") && !input) {
+        const linkIndex = Number(key.match(/\d+/)[0]);
+        if (linkIndex >= linksIndex) {
+          createCustomLinkFields();
+        }
+        input = document.querySelector(`[name="${key}"]`);
+      }
 
       if (input) {
         input.value = data[key];
