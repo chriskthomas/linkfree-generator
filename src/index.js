@@ -1,5 +1,10 @@
+// List of all the custom link fields that should not be saved to localStorage
+const localStorageFormNamesIgnore = ["photo"];
+
 const addClinkBtn = document.querySelector("a.btn");
+
 let index = Number(addClinkBtn.dataset.index);
+
 addClinkBtn.addEventListener("click", (e) => {
   index++;
 
@@ -72,3 +77,34 @@ addClinkBtn.addEventListener("click", (e) => {
   let lastClink = document.querySelector(`form div:nth-child(${index + 5})`);
   lastClink.after(newClink);
 });
+
+// Save all form input values to localStorage on submit
+const form = document.querySelector("form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  const data = Object.fromEntries(formData.entries());
+
+  // Remove all localStorage keys that are in localStorageIgnore
+  localStorageIgnore.forEach((key) => {
+    delete data[key];
+  });
+
+  localStorage.setItem("form", JSON.stringify(data));
+
+  form.submit();
+});
+
+// Load all form input values from localStorage
+const data = JSON.parse(localStorage.getItem("form"));
+if (data) {
+  Object.keys(data).forEach((key) => {
+    const input = document.querySelector(`[name="${key}"]`);
+
+    if (input) {
+      input.value = data[key];
+    }
+  });
+}
