@@ -39,12 +39,14 @@ $lastsite_index = count($sites) - 1;
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LinkFree Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
+
 <body>
   <div class="container my-3">
     <h1>Create your own LinkFree!</h1>
@@ -76,32 +78,32 @@ $lastsite_index = count($sites) - 1;
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="linkfree@ckt.im">
       </div>
-<?php foreach ($sites as $key => $site) {?>
-          <div class="mb-3">
-          <label for="links[<?=$key?>][url]" class="form-label"><?=$site["name"]?> Link</label>
-          <input type="hidden" id="links[<?=$key?>][name]" name="links[<?=$key?>][name]" value="<?=$site["name"]?>">
-          <input type="hidden" id="links[<?=$key?>][icon]" name="links[<?=$key?>][icon]" value="<?=$site["icon"]?>">
-          <input type="url" id="links[<?=$key?>][url]" name="links[<?=$key?>][url]" class="form-control" placeholder="<?=$site["placeholder"]?>">
-          </div>
-<?php }?>
-<?php for ($i = 1; $i <= $num_clinks; $i++) {
-    $key = $lastsite_index + $i;?>
-          <div class="mb-3">
-          <label class="form-label">Custom Link #<?=$i?></label>
-            <div class="row g-2">
-              <div class="input-group col-sm">
-              <input type="text" id="links[<?=$key?>][name]" name="links[<?=$key?>][name]" class="form-control" placeholder="Name" aria-label="Name">
-              <input type="text" id="links[<?=$key?>][icon]" name="links[<?=$key?>][icon]" class="form-control" placeholder="Icon" aria-label="Icon">
-              </div>
-              <div class="col-sm-7 col-md-8 col-xl-9">
-              <input type="url" id="links[<?=$key?>][url]" name="links[<?=$key?>][url]" class="form-control" placeholder="Link" aria-label="Link">
-              </div>
+      <?php foreach ($sites as $key => $site) { ?>
+        <div class="mb-3">
+          <label for="links[<?= $key ?>][url]" class="form-label"><?= $site["name"] ?> Link</label>
+          <input type="hidden" id="links[<?= $key ?>][name]" name="links[<?= $key ?>][name]" value="<?= $site["name"] ?>">
+          <input type="hidden" id="links[<?= $key ?>][icon]" name="links[<?= $key ?>][icon]" value="<?= $site["icon"] ?>">
+          <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="<?= $site["placeholder"] ?>">
+        </div>
+      <?php } ?>
+      <?php for ($i = 1; $i <= $num_clinks; $i++) {
+        $key = $lastsite_index + $i; ?>
+        <div class="mb-3">
+          <label class="form-label">Custom Link #<?= $i ?></label>
+          <div class="row g-2">
+            <div class="input-group col-sm">
+              <input type="text" id="links[<?= $key ?>][name]" name="links[<?= $key ?>][name]" class="form-control" placeholder="Name" aria-label="Name">
+              <input type="text" id="links[<?= $key ?>][icon]" name="links[<?= $key ?>][icon]" class="form-control" placeholder="Icon" aria-label="Icon">
+            </div>
+            <div class="col-sm-7 col-md-8 col-xl-9">
+              <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="Link" aria-label="Link">
             </div>
           </div>
-<?php }?>
-<?php if ($num_clinks < 50) {?>
-        <a class="btn btn-secondary mb-2" data-index="<?=($lastsite_index + $num_clinks)?>" role="button">+ Add Additional Link</a>
-<?php }?>
+        </div>
+      <?php } ?>
+      <?php if ($num_clinks < 50) { ?>
+        <a class="btn btn-secondary mb-2" data-index="<?= ($lastsite_index + $num_clinks) ?>" role="button">+ Add Additional Link</a>
+      <?php } ?>
       <div class="mb-3">
         <div class="form-text">
           For custom links, you may use <a href="https://forkaweso.me/Fork-Awesome/icons/">any icon name from Fork-Awesome</a>. For example, <code>mastodon</code>. Icon field may be left blank.
@@ -111,14 +113,14 @@ $lastsite_index = count($sites) - 1;
         <label for="theme" class="form-label"><span style="font-weight: 500;">Select Template</span></label>
         <select id="theme" name="theme" class="form-select">
           <option value="" selected>Default</option>
-<?php foreach ($themes as $key => $theme) {?>
-          <option value="<?=htmlspecialchars(json_encode($theme))?>"><?=$theme['name']?></option>
-<?php }?>
+          <?php foreach ($themes as $key => $theme) { ?>
+            <option value="<?= htmlspecialchars(json_encode($theme)) ?>"><?= $theme['name'] ?></option>
+          <?php } ?>
         </select>
         <div class="form-text">
           You can <a href="https://chriskthomas.github.io/linkfree-themes/">preview themes here</a>.
         </div>
-        <input type="hidden" id="themes-source" name="themes-source" value="<?=$themes_source?>">
+        <input type="hidden" id="themes-source" name="themes-source" value="<?= $themes_source ?>">
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" id="ispreview" name="ispreview" class="form-check-input">
@@ -126,6 +128,7 @@ $lastsite_index = count($sites) - 1;
         <span class="form-text">Make a preview instead of downloading file.</span>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <a id="clear" class="btn btn-danger" role="button">Clear</a>
     </form>
     <p>This project is supported by:</p>
     <a href="https://m.do.co/c/8bd90b1b884d">
@@ -146,4 +149,5 @@ $lastsite_index = count($sites) - 1;
   </footer>
   <script src="./index.js"></script>
 </body>
+
 </html>
