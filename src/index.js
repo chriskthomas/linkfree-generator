@@ -165,7 +165,7 @@ addCustomLinkButton.addEventListener("click", () => {
 
 clearButton.addEventListener("click", () => {
   localStorage.removeItem("form");
-  window.location.reload();
+  form.reset();
 });
 
 form.addEventListener("submit", (e) => {
