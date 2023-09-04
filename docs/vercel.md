@@ -21,8 +21,7 @@ you can then choose signup with email. If you already have a `Github Account` or
 
 ## Step 4
 
-After signing up, you will be navigate to the dashboard, click on the `Add New` button
-
+After signing up, you will be navigate to the dashboard.
 ![Dashboard](screenshots/vercel/vercel_dashboard.png)
 
 ## Step 5
