@@ -13,6 +13,7 @@ After generating your `index.html` file, you can follow the instructions below t
 
 - Host your website on [Github Pages](./docs/github-pages.md)
 - Host your website on [Netlify](./docs/netlify.md)
+- Host your website on [Vercel](./docs/vercel.md)
 
 This project is supported by:
 
