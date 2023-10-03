@@ -60,8 +60,8 @@ $lastsite_index = count($sites) - 1;
         <div class="form-text">Your name is the only required field.</div>
       </div>
       <div class="mb-3">
-        <label for="url" class="form-label">Main Link</label>
-        <input type="url" id="url" name="url" class="form-control" placeholder="https://chriskthomas.com">
+        <label for="text" class="form-label">Main Link</label>
+        <input type="url" id="url" name="url" class="form-control urlInput" placeholder="https://chriskthomas.com">
         <div class="form-text">Your name will link to this URL (optional).</div>
       </div>
       <div class="mb-3">
@@ -83,7 +83,7 @@ $lastsite_index = count($sites) - 1;
           <label for="links[<?= $key ?>][url]" class="form-label"><?= $site["name"] ?> Link</label>
           <input type="hidden" id="links[<?= $key ?>][name]" name="links[<?= $key ?>][name]" value="<?= $site["name"] ?>">
           <input type="hidden" id="links[<?= $key ?>][icon]" name="links[<?= $key ?>][icon]" value="<?= $site["icon"] ?>">
-          <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="<?= $site["placeholder"] ?>">
+          <input type="text" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control urlInput" placeholder="<?= $site["placeholder"] ?>">
         </div>
       <?php } ?>
       <?php for ($i = 1; $i <= $num_clinks; $i++) {
@@ -96,7 +96,7 @@ $lastsite_index = count($sites) - 1;
               <input type="text" id="links[<?= $key ?>][icon]" name="links[<?= $key ?>][icon]" class="form-control" placeholder="Icon" aria-label="Icon">
             </div>
             <div class="col-sm-7 col-md-8 col-xl-9">
-              <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="Link" aria-label="Link">
+              <input type="text" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control urlInput" placeholder="Link" aria-label="Link">
             </div>
           </div>
         </div>

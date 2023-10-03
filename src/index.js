@@ -98,6 +98,55 @@ function createCustomLinkFields() {
 }
 
 /**
+ * Validates URL inputs and provides visual feedback.
+ *
+ * @param {NodeListOf<HTMLInputElement>} urlInputs - The URL input elements to validate.
+ */
+function validateURLInputs(urlInputs) {
+  /**
+   * Event listener for input changes in URL fields.
+   *
+   * @param {Event} event - The input event.
+   */
+  function handleInputChange(event) {
+    const input = event.target;
+    const url = input.value.trim();
+    const validationMessage = input.nextElementSibling;
+
+    if (isValidURL(url)) {
+      input.style.borderColor = "green"; // Set border color to green for valid URL
+      validationMessage.textContent = "URL is valid.";
+      validationMessage.style.color = "green";
+    } else {
+      input.style.borderColor = "red"; // Set border color to red for invalid URL
+      validationMessage.textContent = "Invalid URL. Please enter a valid URL.";
+      validationMessage.style.color = "red";
+    }
+  }
+
+  /**
+   * Checks if a URL is valid based on a simple pattern.
+   *
+   * @param {string} url - The URL to validate.
+   * @returns {boolean} - True if the URL is valid, false otherwise.
+   */
+  function isValidURL(url) {
+    const urlPattern =
+      /^(www\.)?[A-Za-z0-9_-]+\.[A-Za-z]{2,3}(\.[A-Za-z]{2})?$/;
+    return urlPattern.test(url);
+  }
+
+  // Attach input event listeners to each URL input field
+  urlInputs.forEach(function (input) {
+    input.addEventListener("input", handleInputChange);
+  });
+}
+
+// Get all input elements with the "urlInput" class and set up validation
+const urlInputs = document.querySelectorAll(".urlInput");
+validateURLInputs(urlInputs);
+
+/**
  * Save all form input values to localStorage
  * @example
  * saveFormToLocalStorage(form);
