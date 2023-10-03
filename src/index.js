@@ -157,6 +157,22 @@ function loadFormFromLocalStorage() {
   }
 }
 
+/**
+ * Adds the protocol 'http://' to a URL input value if it's missing.
+ *
+ * @param {HTMLInputElement} input - The URL input element.
+ * @returns {void}
+ * @example
+ * const inputElement = document.getElementById('url');
+ * addProtocolIfMissing(inputElement);
+ */
+function addProtocolIfMissing(input) {
+  let url = input.value.trim();
+  if (url !== "" && !/^https?:\/\//i.test(url)) {
+    input.value = "http://" + url;
+  }
+}
+
 // Event listeners
 
 addCustomLinkButton.addEventListener("click", () => {
@@ -176,4 +192,11 @@ form.addEventListener("submit", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFormFromLocalStorage();
+});
+
+let urlInputs = document.querySelectorAll('input[type="url"]');
+urlInputs.forEach((input) => {
+  input.addEventListener("blur", (event) => {
+    addProtocolIfMissing(event.target);
+  });
 });
