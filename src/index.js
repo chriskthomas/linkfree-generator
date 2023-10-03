@@ -168,7 +168,7 @@ function loadFormFromLocalStorage() {
  */
 function addProtocolIfMissing(input) {
   let url = input.value.trim();
-  if (url !== "" && !/^https?:\/\//i.test(url)) {
+  if (url !== "" && !/:/.test(url)) {
     input.value = "http://" + url;
   }
 }
