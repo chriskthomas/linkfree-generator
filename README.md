@@ -19,7 +19,7 @@ After generating your `index.html` file, you can follow the instructions below t
 
 <div align="center">
     <a  href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=chriskthomas/linkfree-generator" />
+        <img src="https://contrib.rocks/image?repo=chriskthomas/linkfree-generator" alt="contributers" />
     </a>
 </div>
 
