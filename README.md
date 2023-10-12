@@ -15,6 +15,14 @@ After generating your `index.html` file, you can follow the instructions below t
 - Host your website on [Netlify](./docs/netlify.md)
 - Host your website on [Vercel](./docs/vercel.md)
 
+## Best Contributors
+
+<div align="center">
+    <a  href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=chriskthomas/linkfree-generator" />
+    </a>
+</div>
+
 This project is supported by:
 
 <a href="https://m.do.co/c/8bd90b1b884d">
