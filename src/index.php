@@ -118,7 +118,7 @@ $lastsite_index = count($sites) - 1;
           <?php } ?>
         </select>
         <div class="form-text">
-          You can <a href="https://chriskthomas.github.io/linkfree-themes/">preview themes here</a>.
+          You can <a href="https://writeplace.github.io/linkfree-themes/">preview themes here</a>.
         </div>
         <input type="hidden" id="themes-source" name="themes-source" value="<?= $themes_source ?>">
       </div>
@@ -138,12 +138,12 @@ $lastsite_index = count($sites) - 1;
   <footer class="my-4 py-3 border-top">
     <div class="container">
       <p class="text-center text-secondary m-0">
-        <a href="https://github.com/chriskthomas/linkfree-generator" rel="self">Open source software</a>
+        <a href="https://github.com/writeplace/linkfree-generator" rel="self">Open source software</a>
         by
         <a href="https://chriskthomas.com" rel="author">Chris K. Thomas</a>
         and other contributors:
-        <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
-        <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
+        <a href="https://github.com/writeplace/linkfree-generator/graphs/contributors">[1]</a>
+        <a href="https://github.com/writeplace/linkfree-themes/graphs/contributors">[2]</a>
       </p>
     </div>
   </footer>
