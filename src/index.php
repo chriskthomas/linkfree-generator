@@ -1,5 +1,5 @@
 <?php
-$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@0.5.1";
+$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@0.6.1";
 
 $sites = [
   [
@@ -44,7 +44,7 @@ $lastsite_index = count($sites) - 1;
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LinkFree Generator</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <body>
@@ -118,7 +118,7 @@ $lastsite_index = count($sites) - 1;
           <?php } ?>
         </select>
         <div class="form-text">
-          You can <a href="https://writeplace.github.io/linkfree-themes/">preview themes here</a>.
+          You can <a href="https://chriskthomas.github.io/linkfree-themes/">preview themes here</a>.
         </div>
         <input type="hidden" id="themes-source" name="themes-source" value="<?= $themes_source ?>">
       </div>
@@ -138,12 +138,12 @@ $lastsite_index = count($sites) - 1;
   <footer class="my-4 py-3 border-top">
     <div class="container">
       <p class="text-center text-secondary m-0">
-        <a href="https://github.com/writeplace/linkfree-generator" rel="self">Open source software</a>
+        <a href="https://github.com/chriskthomas/linkfree-generator" rel="self">Open source software</a>
         by
         <a href="https://chriskthomas.com" rel="author">Chris K. Thomas</a>
         and other contributors:
-        <a href="https://github.com/writeplace/linkfree-generator/graphs/contributors">[1]</a>
-        <a href="https://github.com/writeplace/linkfree-themes/graphs/contributors">[2]</a>
+        <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
+        <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
       </p>
     </div>
   </footer>
