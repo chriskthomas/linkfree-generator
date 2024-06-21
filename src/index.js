@@ -141,7 +141,12 @@ function loadFormFromLocalStorage() {
     Object.keys(data).forEach((key) => {
       let input = document.querySelector(`[name="${key}"]`);
 
-      // If the input is a link that doesnt exist, create it
+      // If the input is hidden, continue
+      if (input && input.type === "hidden") {
+        return;
+      }
+
+      // If the input is a link that doesn't exist, create it
       if (key.startsWith("links") && !input) {
         const linkIndex = Number(key.match(/\d+/)[0]);
         if (linkIndex >= linksIndex) {

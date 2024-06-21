@@ -3,29 +3,29 @@ $themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@0.6.1";
 
 $sites = [
   [
-    "name" => "Twitter",
-    "icon" => "twitter",
-    "placeholder" => "https://twitter.com/...",
-  ],
-  [
     "name" => "LinkedIn",
-    "icon" => "linkedin-square",
+    "icon" => "logo-linkedin",
     "placeholder" => "https://linkedin.com/in/...",
   ],
   [
     "name" => "Instagram",
-    "icon" => "instagram",
+    "icon" => "logo-instagram",
     "placeholder" => "https://instagram.com/...",
   ],
   [
     "name" => "Twitch",
-    "icon" => "twitch",
+    "icon" => "logo-twitch",
     "placeholder" => "https://twitch.tv/...",
   ],
   [
     "name" => "YouTube",
-    "icon" => "youtube-play",
+    "icon" => "logo-youtube",
     "placeholder" => "https://youtube.com/c/...",
+  ],
+  [
+    "name" => "X (Twitter)",
+    "icon" => "logo-x",
+    "placeholder" => "https://x.com/...",
   ],
 ];
 
@@ -106,7 +106,7 @@ $lastsite_index = count($sites) - 1;
       <?php } ?>
       <div class="mb-3">
         <div class="form-text">
-          For custom links, you may use <a href="https://forkaweso.me/Fork-Awesome/icons/">any icon name from Fork-Awesome</a>. For example, <code>mastodon</code>. Icon field may be left blank.
+          For custom links, you may use <a href="https://ionic.io/ionicons">any icon from ionicons</a> by name. For example, <code>logo-mastodon</code>. Icon field may be left blank.
         </div>
       </div>
       <div class="mb-3">

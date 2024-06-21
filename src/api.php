@@ -43,7 +43,6 @@ if (!isset($_POST["ispreview"])) {
             <?php include "default.css"; ?>
         </style>
     <?php } ?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
 </head>
 
 <body>
@@ -64,7 +63,7 @@ if (!isset($_POST["ispreview"])) {
             if (!empty($link["url"])) { ?>
                 <a class="link" href="<?= $link["url"] ?>" target="_blank">
                     <?php if (!empty($link["icon"])) { ?>
-                        <i class="fa fa-<?= $link["icon"] ?>" aria-hidden="true"></i>
+                        <ion-icon name="<?= $link["icon"] ?>"></ion-icon>
                     <?php } ?>
                     <?= $link["name"] ?>
                 </a>
@@ -72,14 +71,15 @@ if (!isset($_POST["ispreview"])) {
         } ?>
         <?php if (!empty($_POST["email"])) { ?>
             <!--email_off-->
-            <a class="link" href="mailto:<?= $_POST["email"] ?>" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
+            <a class="link" href="mailto:<?= $_POST["email"] ?>" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>
             <!--/email_off-->
         <?php } ?>
     </div>
     <?php if (!empty($theme["js"])) { ?>
         <script src="<?= "{$_POST["themes-source"]}/{$theme["js"]}" ?>"></script>
     <?php } ?>
-
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
