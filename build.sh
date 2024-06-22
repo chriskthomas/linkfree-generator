@@ -11,3 +11,4 @@ minify -o dist/index.js src/index.js
 
 # Copy other assets
 cp src/api.php dist/api.php
+cp src/template.php dist/template.php
