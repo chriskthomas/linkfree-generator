@@ -16,7 +16,7 @@ RUN set -x \
     && groupadd --system --gid 101 nginx \
     && useradd --system -g nginx --no-create-home --home-dir /nonexistent --comment "nginx user" --shell /bin/false --uid 101 nginx \
     && apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y nginx-core php-fpm \
+    && apt-get install --no-install-recommends --no-install-suggests -y nginx-core php-fpm php-zip \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
