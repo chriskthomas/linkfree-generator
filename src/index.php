@@ -127,6 +127,10 @@ $lastsite_index = count($sites) - 1;
         <label for="ispreview" class="form-check-label">Preview?</label>
         <span class="form-text">Make a preview instead of downloading file.</span>
       </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" id="getzip" name="getzip" class="form-check-input">
+        <label for="getzip" class="form-check-label">Zip File?</label>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <a id="clear" class="btn btn-danger" role="button">Clear</a>
     </form>

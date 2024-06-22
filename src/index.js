@@ -1,8 +1,11 @@
 const localStorageIgnore = ["photo"];
 
+// Elements
 const addCustomLinkButton = document.querySelector("a.btn");
 const clearButton = document.querySelector("a.btn-danger");
 const form = document.querySelector("form");
+const checkbox_preview = document.getElementById("ispreview");
+const checkbox_zip = document.getElementById("getzip");
 
 let linksIndex = Number(addCustomLinkButton.dataset.index);
 
@@ -204,4 +207,14 @@ urlInputs.forEach((input) => {
   input.addEventListener("blur", (event) => {
     addProtocolIfMissing(event.target);
   });
+});
+
+// Disable the zip checkbox if the preview checkbox is checked
+checkbox_preview.addEventListener("change", () => {
+  checkbox_zip.disabled = checkbox_preview.checked;
+});
+
+// Disable the preview checkbox if the zip checkbox is checked
+checkbox_zip.addEventListener("change", () => {
+  checkbox_preview.disabled = checkbox_zip.checked;
 });
