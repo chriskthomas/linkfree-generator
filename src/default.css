@@ -1,13 +1,11 @@
 :root {
   --bgColor: #1c1c1c;
   --accentColor: #e6e6e6;
-  --font: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
-    helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
-    sans-serif;
+  --font: system-ui, sans-serif;
 }
 
 #userName,
-.link,
+#links,
 p {
   display: block;
   font-family: var(--font);
@@ -47,11 +45,15 @@ p {
 #links {
   max-width: 675px;
   width: auto;
-  display: block;
   margin: 27px auto;
 }
 
 .link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   background-color: var(--accentColor);
   color: var(--bgColor);
   margin-bottom: 20px;
