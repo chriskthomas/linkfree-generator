@@ -16,6 +16,10 @@ Thank you for your interest in contributing to this project! We are always looki
 
 Please make pull requests to the `main` branch (which is the default). Once merged, contributors can test updates on [linkfree.fly.dev](https://linkfree.fly.dev). If everything looks good, we can sync the new changes to the production branch which deploys to [linkfree.ckt.im](https://linkfree.ckt.im).
 
+## Development environment
+
+This project is written in php and is inteded to work with the php development server. After cloning the repository, just run ``cd src && php -S localhost:8000` to set up your own local version acessible from <http://localhost:8000> in your browser. You can also test with docker, but it is less convenient for development.
+
 ## Code of Conduct
 
 This project is committed to a welcoming and inclusive environment. Please be respectful of all contributors, regardless of their background or experience.
