@@ -149,7 +149,7 @@ $lastsite_index = count($sites) - 1;
         <a href="https://github.com/chriskthomas/linkfree-generator/graphs/contributors">[1]</a>
         <a href="https://github.com/chriskthomas/linkfree-themes/graphs/contributors">[2]</a>
         <br>
-        <a href="https://chriskthomas.github.io/linkfree-generator/">Docs</a>
+        <a href="https://chriskthomas.github.io/linkfree-generator/">Next Steps: Guides for Hosting LinkFree</a>
       </p>
 
     </div>
