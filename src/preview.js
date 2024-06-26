@@ -5,10 +5,10 @@ var preview = false;
 
 previewButton.addEventListener('click', function() {
     preview = !preview;
-    UpdatePreview();
+    SwitchPreview();
 });
 
-function UpdatePreview() {
+function SwitchPreview() {
     if (preview) {
         previewBlock.style.display = 'block';
         previewButton.style.filter = 'invert(1)';
@@ -18,4 +18,4 @@ function UpdatePreview() {
     }
 }
 
-UpdatePreview();
+SwitchPreview();
