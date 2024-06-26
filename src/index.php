@@ -54,7 +54,7 @@ $lastsite_index = count($sites) - 1;
     <p>
       Fill out this form to generate your own single page website. All fields are optional except for your name. So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code> file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or DigitalOcean Apps.
     </p>
-    <form class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    <form id="form" class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" id="name" name="name" class="form-control" placeholder="Chris K. Thomas" required>
