@@ -2,6 +2,9 @@
 var previewButton = document.getElementById('previewButton');
 var previewBlock = document.getElementById('previewBlock');
 var preview = false;
+// Get Link Count from data-index
+var addButton = document.getElementById("additionalLink");
+var linkCount = Number(addButton.getAttribute("data-index")) + 1;
 
 // Get form Data
 var formData = document.getElementById('form');
@@ -34,6 +37,20 @@ formData['photo'].addEventListener('input', (e) => {
     }
 });
 
+addButton.addEventListener('click', () => {
+    linkCount++;
+    var linkId = `links[${linkCount - 1}]`;
+    document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
+});
+
+for (var i = 0; i < linkCount; i++) {
+    var linkId = `links[${i}]`;
+    document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
+}
 formData['name'].addEventListener('input', UpdatePreview);
 formData['url'].addEventListener('input', UpdatePreview);
 formData['description'].addEventListener('input', UpdatePreview);
@@ -43,7 +60,29 @@ function UpdatePreview() {
     var name = formData['name'].value;
     var mainUrl= formData['url'].value;
     var description = formData['description'].value;
-    // [Add Links]
+
+    // Links
+    var linksCode = "";
+    for (var i = 0; i < linkCount; i++) {
+        var linkId = `links[${i}]`;
+        var linkUrl = document.getElementById(linkId + "[url]").value;
+        var linkName = document.getElementById(linkId + "[name]").value;
+        var linkIcon = document.getElementById(linkId + "[icon]").value;
+        if(linkUrl !== ""){
+            if(linkIcon !== ""){
+                linksCode += 
+                    `<a class="link" href="${linkUrl}" target="_blank">
+                    <ion-icon name="${linkIcon}"></ion-icon>
+                    ${linkName} </a>`;
+            }
+            else{
+                linksCode += 
+                    `<a class="link" href="${linkUrl}" target="_blank">
+                    ${linkName} </a>`;
+            }
+        }
+    }
+        
     var email = formData['email'].value;
     // [Add Theme js]
 
@@ -59,9 +98,7 @@ function UpdatePreview() {
     var emailCode = "";
     if(email !== '') emailCode = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
-    var previewCode = `${photoCode} ${nameCode} ${descriptionCode} ${emailCode}
-        <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>`;
+    var previewCode = `${photoCode} ${nameCode} ${descriptionCode} ${linksCode} ${emailCode}`;
     
     previewBlock.innerHTML = previewCode;
 };

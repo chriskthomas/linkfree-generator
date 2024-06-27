@@ -103,7 +103,7 @@ $lastsite_index = count($sites) - 1;
         </div>
       <?php } ?>
       <?php if ($num_clinks < 50) { ?>
-        <a class="btn btn-secondary mb-2" data-index="<?= ($lastsite_index + $num_clinks) ?>" role="button">+ Add Additional Link</a>
+        <a id="additionalLink" class="btn btn-secondary mb-2" data-index="<?= ($lastsite_index + $num_clinks) ?>" role="button">+ Add Additional Link</a>
       <?php } ?>
       <div class="mb-3">
         <div class="form-text">
@@ -163,6 +163,7 @@ $lastsite_index = count($sites) - 1;
   </div>
   <script src="./index.js"></script>
   <script src="./preview.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>
