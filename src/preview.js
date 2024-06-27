@@ -1,5 +1,6 @@
 // Get Window Elements
 var previewButton = document.getElementById('previewButton');
+var previewBody = document.getElementById('previewBody');
 var previewBlock = document.getElementById('previewBlock');
 var preview = false;
 // Get Link Count from data-index
@@ -39,7 +40,7 @@ formData['photo'].addEventListener('input', (e) => {
 
 addButton.addEventListener('click', () => {
     linkCount++;
-    var linkId = `links[${linkCount - 1}]`;
+    var linkId = `links[${linkCount}]`;
     document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
     document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
     document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
@@ -63,7 +64,7 @@ function UpdatePreview() {
 
     // Links
     var linksCode = "";
-    for (var i = 0; i < linkCount; i++) {
+    for (var i = 0; i < linkCount + 1; i++) {
         var linkId = `links[${i}]`;
         var linkUrl = document.getElementById(linkId + "[url]").value;
         var linkName = document.getElementById(linkId + "[name]").value;
@@ -100,7 +101,7 @@ function UpdatePreview() {
 
     var previewCode = `${photoCode} ${nameCode} ${descriptionCode} ${linksCode} ${emailCode}`;
     
-    previewBlock.innerHTML = previewCode;
+    previewBody.innerHTML = previewCode;
 };
 
 SwitchPreview();
