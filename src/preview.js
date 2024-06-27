@@ -17,10 +17,12 @@ previewButton.addEventListener('click', function() {
 });
 function SwitchPreview() {
     if (preview) {
-        previewBlock.style.display = 'block';
+        // previewBlock.style.display = 'block';
+        previewBlock.style.right = '0';
         previewButton.style.filter = 'invert(1)';
     } else {
-        previewBlock.style.display = 'none';
+        // previewBlock.style.display = 'none';
+        previewBlock.style.right = '-100%';
         previewButton.style.filter = 'invert(0)';
     }
     UpdatePreview();

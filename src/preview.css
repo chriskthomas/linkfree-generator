@@ -23,6 +23,7 @@
     max-width: 50%;
     min-width: 30%;
     z-index: 1;
+    transition: 500ms;
 }
 #previewBody{
     overflow-x: auto;
