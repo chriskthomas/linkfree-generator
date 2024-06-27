@@ -233,12 +233,13 @@ var previewBody = document.getElementById('previewBody');
 var previewBlock = document.getElementById('previewBlock'); 
 var additionalLinkButton = document.getElementById("additionalLink");
 var formData = document.getElementById('form');
-var theme = document.getElementById('theme').value;
+var theme = document.getElementById('theme');
 
 // Real time variables
 var preview = false;
 var photo = "";
 var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
+const styleElement = document.createElement('style');
 
 // Preview Button functionality
 previewButton.addEventListener('click', () => {
@@ -291,6 +292,8 @@ function UpdatePreview() {
         var linkUrl = document.getElementById(linkId + "[url]").value;
         var linkName = document.getElementById(linkId + "[name]").value;
         var linkIcon = document.getElementById(linkId + "[icon]").value;
+        var photoCode = "";
+
         if(linkUrl !== ""){
             if(linkIcon !== ""){
               links += 
@@ -309,27 +312,31 @@ function UpdatePreview() {
     // [Add Theme js]
 
     // Check if data is added
-    if(photo !== '') photo = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
+    if(photo !== '') photoCode = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
     if(name !== '') name = `<a href="${mainUrl}"><h1 id="userName">${name}</h1></a>`;
     if(description !== '') description =`<p id="description">${description}</p>`;
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
     // Update Preview
-    var previewCode = `${photo} ${name} ${description} ${links} ${email}`;
+    var previewCode = `${photoCode} ${name} ${description} ${links} ${email}`;
     previewBody.innerHTML = previewCode;
 
     // Update Css
-    if(theme == "") theme = "default.css";
+    var themePath = "default.css";
+    if(theme.value != "") themePath = theme.value;
+    console.log(themePath)
     // Get data from css file
-    fetch(theme).then(response => response.text()).then(data => {
+    fetch(themePath + "/style.css").then(response => response.text()).then(data => {
       // Change body to #previewBody
+      data = data.replace(new RegExp("images/", 'g'), `${themePath}/images/`);
       data = data.replace(new RegExp("body ", 'g'), "#previewBody");
-      data = data.replace(new RegExp("p ", 'g'), "#previewBody > p");
-      data = data.replace(new RegExp("a ", 'g'), "#previewBody > a");
-      const styleElement = document.createElement('style');
+      data = data.replace(new RegExp("p,", 'g'), "#previewBody > p,");
+      data = data.replace(new RegExp("a,", 'g'), "#previewBody > a,");
+      data = data.replace(new RegExp("p ", 'g'), "#previewBody > p ");
+      data = data.replace(new RegExp("a ", 'g'), "#previewBody > a ");
+      console.log(data);
       styleElement.textContent = data;
       document.head.appendChild(styleElement);
-      console.log(data);
     });
     
 };
@@ -346,3 +353,4 @@ formData['name'].addEventListener('input', UpdatePreview);
 formData['url'].addEventListener('input', UpdatePreview);
 formData['description'].addEventListener('input', UpdatePreview);
 formData['email'].addEventListener('input', UpdatePreview);
+theme.addEventListener('input', UpdatePreview);
