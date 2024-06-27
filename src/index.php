@@ -156,7 +156,7 @@ $lastsite_index = count($sites) - 1;
     </div>
   </footer>
   <button id="previewButton">
-    <img src="../assets/preview.png" alt="preview icon">
+  <ion-icon name="eye"></ion-icon>
   </button>
   
   <div id="previewBlock">
