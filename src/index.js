@@ -233,6 +233,7 @@ var previewBody = document.getElementById('previewBody');
 var previewBlock = document.getElementById('previewBlock'); 
 var additionalLinkButton = document.getElementById("additionalLink");
 var formData = document.getElementById('form');
+var theme = document.getElementById('theme').value;
 
 // Real time variables
 var preview = false;
@@ -316,6 +317,21 @@ function UpdatePreview() {
     // Update Preview
     var previewCode = `${photo} ${name} ${description} ${links} ${email}`;
     previewBody.innerHTML = previewCode;
+
+    // Update Css
+    if(theme == "") theme = "default.css";
+    // Get data from css file
+    fetch(theme).then(response => response.text()).then(data => {
+      // Change body to #previewBody
+      data = data.replace(new RegExp("body ", 'g'), "#previewBody");
+      data = data.replace(new RegExp("p ", 'g'), "#previewBody > p");
+      data = data.replace(new RegExp("a ", 'g'), "#previewBody > a");
+      const styleElement = document.createElement('style');
+      styleElement.textContent = data;
+      document.head.appendChild(styleElement);
+      console.log(data);
+    });
+    
 };
 
 // Add Listner for all links on file Load
