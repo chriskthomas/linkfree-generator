@@ -46,7 +46,6 @@ $lastsite_index = count($sites) - 1;
   <title>LinkFree Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="preview.css">
-  <link rel="stylesheet" href="default.css">
 </head>
 
 <body>
@@ -166,7 +165,6 @@ $lastsite_index = count($sites) - 1;
   </div>
   
   <script src="./index.js"></script>
-  <script src="./preview.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
 </body>

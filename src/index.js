@@ -218,3 +218,115 @@ checkbox_preview.addEventListener("change", () => {
 checkbox_zip.addEventListener("change", () => {
   checkbox_preview.disabled = checkbox_zip.checked;
 });
+
+/*****************************************************/
+/***************** Real Time Preview *****************/
+/*****************************************************/
+
+// Get Window Elements
+var previewButton = document.getElementById('previewButton');
+/** 
+* [!Note] Body is inside Block. 
+* Block is for controling visibility and Body is for preview content 
+**/
+var previewBody = document.getElementById('previewBody');
+var previewBlock = document.getElementById('previewBlock'); 
+var additionalLinkButton = document.getElementById("additionalLink");
+var formData = document.getElementById('form');
+
+// Real time variables
+var preview = false;
+var photo = "";
+var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
+
+// Preview Button functionality
+previewButton.addEventListener('click', () => {
+  preview = !preview;
+  if (preview) {
+      // previewBlock.style.display = 'block';
+      previewBlock.style.right = '0';
+      previewButton.style.filter = 'invert(1)';
+  } else {
+      // previewBlock.style.display = 'none';
+      previewBlock.style.right = '-100%';
+      previewButton.style.filter = 'invert(0)';
+  }
+  UpdatePreview();
+});
+
+// Update Preview Photo On Input
+formData['photo'].addEventListener('input', (e) => {
+    var photoData = e.target.files[0];
+    if(photoData) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            photo = e.target.result;
+            UpdatePreview();
+        }
+        reader.readAsDataURL(photoData);
+    }
+});
+
+// Add Listner for additionalLinkButton and for form data
+additionalLinkButton.addEventListener('click', () => {
+    linkCount++;
+    var linkId = `links[${linkCount}]`;
+    document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
+    document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
+});
+
+// Update Prview Function
+function UpdatePreview() {
+    var name = formData['name'].value;
+    var mainUrl= formData['url'].value;
+    var description = formData['description'].value;
+    var email = formData['email'].value;
+    var links = "";
+
+    // Links
+    for (var i = 0; i < linkCount + 1; i++) {
+        var linkId = `links[${i}]`;
+        var linkUrl = document.getElementById(linkId + "[url]").value;
+        var linkName = document.getElementById(linkId + "[name]").value;
+        var linkIcon = document.getElementById(linkId + "[icon]").value;
+        if(linkUrl !== ""){
+            if(linkIcon !== ""){
+              links += 
+                `<a class="link" href="${linkUrl}" target="_blank">
+                <ion-icon name="${linkIcon}"></ion-icon>
+                ${linkName} </a>`;
+            }
+            else{
+              links += 
+                `<a class="link" href="${linkUrl}" target="_blank">
+                ${linkName} </a>`;
+            }
+        }
+    }
+
+    // [Add Theme js]
+
+    // Check if data is added
+    if(photo !== '') photo = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
+    if(name !== '') name = `<a href="${mainUrl}"><h1 id="userName">${name}</h1></a>`;
+    if(description !== '') description =`<p id="description">${description}</p>`;
+    if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
+
+    // Update Preview
+    var previewCode = `${photo} ${name} ${description} ${links} ${email}`;
+    previewBody.innerHTML = previewCode;
+};
+
+// Add Listner for all links on file Load
+for (var i = 0; i < linkCount; i++) {
+  var linkId = `links[${i}]`;
+  document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
+  document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
+  document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
+}
+// Add Listner for all forms inputs on file Load
+formData['name'].addEventListener('input', UpdatePreview);
+formData['url'].addEventListener('input', UpdatePreview);
+formData['description'].addEventListener('input', UpdatePreview);
+formData['email'].addEventListener('input', UpdatePreview);

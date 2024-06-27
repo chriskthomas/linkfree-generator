@@ -24,6 +24,7 @@
     min-width: 30%;
     z-index: 1;
     transition: 500ms;
+    right: -100%;
 }
 #previewBody{
     overflow-x: auto;
