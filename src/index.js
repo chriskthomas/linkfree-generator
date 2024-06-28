@@ -314,9 +314,13 @@ function UpdatePreview() {
     if(description !== '') description =`<p id="description">${description}</p>`;
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
-    // Add Css file
-    var themePath = "default.css";
-    if(theme.value != "") themePath = theme.value;
+    // Add path to files
+    var themePath = theme.value;
+
+    // Add Style
+    var themeStylePath = themePath + "/style.css";
+    console.log(themePath);
+    if(themePath == "") themeStylePath = "http://localhost:3000/src/default.css";
 
     // Update Preview
     var previewCode = 
@@ -324,7 +328,7 @@ function UpdatePreview() {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="${themePath}/style.css">
+        <link rel="stylesheet" href="${themeStylePath}">
       </head>
       <body style="overload-y: auto;">
         ${photoCode}

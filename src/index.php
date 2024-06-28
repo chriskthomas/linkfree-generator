@@ -156,11 +156,12 @@ $lastsite_index = count($sites) - 1;
     </div>
   </footer>
   <button id="previewButton">
-  <ion-icon name="eye"></ion-icon>
+    <ion-icon name="eye"></ion-icon>
   </button>
   
   <div id="previewBlock">
   </div>
+  <div id="previewBlock"></div>
   
   <script src="./index.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
