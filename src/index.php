@@ -43,7 +43,6 @@ $lastsite_index = count($sites) - 1;
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
   <meta name="description" content="Create your own LinkFree and have all your links in one place">
   <meta name="author" content="Chris K. Thomas">
   <meta name="keywords" content="linkfree, linktree, link in bio, link in bio alternative, linkfree generator, linktree generator, link in bio generator">
