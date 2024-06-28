@@ -229,7 +229,6 @@ var previewButton = document.getElementById('previewButton');
 * [!Note] Body is inside Block. 
 * Block is for controling visibility and Body is for preview content 
 **/
-var previewBody = document.getElementById('previewBody');
 var previewBlock = document.getElementById('previewBlock'); 
 var additionalLinkButton = document.getElementById("additionalLink");
 var formData = document.getElementById('form');
@@ -309,35 +308,39 @@ function UpdatePreview() {
         }
     }
 
-    // [Add Theme js]
-
     // Check if data is added
     if(photo !== '') photoCode = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
     if(name !== '') name = `<a href="${mainUrl}"><h1 id="userName">${name}</h1></a>`;
     if(description !== '') description =`<p id="description">${description}</p>`;
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
-    // Update Preview
-    var previewCode = `${photoCode} ${name} ${description} ${links} ${email}`;
-    previewBody.innerHTML = previewCode;
-
-    // Update Css
+    // Add Css file
     var themePath = "default.css";
     if(theme.value != "") themePath = theme.value;
-    console.log(themePath)
-    // Get data from css file
-    fetch(themePath + "/style.css").then(response => response.text()).then(data => {
-      // Change body to #previewBody
-      data = data.replace(new RegExp("images/", 'g'), `${themePath}/images/`);
-      data = data.replace(new RegExp("body ", 'g'), "#previewBody");
-      data = data.replace(new RegExp("p,", 'g'), "#previewBody > p,");
-      data = data.replace(new RegExp("a,", 'g'), "#previewBody > a,");
-      data = data.replace(new RegExp("p ", 'g'), "#previewBody > p ");
-      data = data.replace(new RegExp("a ", 'g'), "#previewBody > a ");
-      console.log(data);
-      styleElement.textContent = data;
-      document.head.appendChild(styleElement);
-    });
+
+    // Update Preview
+    var previewCode = 
+    `<html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="${themePath}/style.css">
+      </head>
+      <body style="overload-y: auto;">
+        ${photoCode}
+        ${name}
+        ${description}
+        ${email}
+        ${links}
+      </body>
+      <script src="${themePath}/index.js"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+    </html>`;
+
+    var blob = new Blob([previewCode], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    previewBlock.innerHTML = `<object style="width: 100%; height: 100%;" type='text/html' data='${url}'></object>`;
     
 };
 

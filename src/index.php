@@ -160,8 +160,6 @@ $lastsite_index = count($sites) - 1;
   </button>
   
   <div id="previewBlock">
-    <div id="previewBody">
-    </div>
   </div>
   
   <script src="./index.js"></script>
