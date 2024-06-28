@@ -1,4 +1,5 @@
 const localStorageIgnore = ["photo"];
+const themeUrl =  "https://cdn.jsdelivr.net/npm/linkfree-themes@1.1.0";
 
 // Elements
 const addCustomLinkButton = document.querySelector("a.btn");
@@ -225,10 +226,6 @@ checkbox_zip.addEventListener("change", () => {
 
 // Get Window Elements
 var previewButton = document.getElementById('previewButton');
-/** 
-* [!Note] Body is inside Block. 
-* Block is for controling visibility and Body is for preview content 
-**/
 var previewBlock = document.getElementById('previewBlock'); 
 var additionalLinkButton = document.getElementById("additionalLink");
 var formData = document.getElementById('form');
@@ -237,7 +234,7 @@ var theme = document.getElementById('theme');
 // Real time variables
 var preview = false;
 var photo = "";
-var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
+var linkCount = Number(additionalLinkButton.getAttribute("data-index"));
 const styleElement = document.createElement('style');
 
 // Preview Button functionality
@@ -247,12 +244,12 @@ previewButton.addEventListener('click', () => {
       // previewBlock.style.display = 'block';
       previewBlock.style.right = '0';
       previewButton.style.filter = 'invert(1)';
+      UpdatePreview();
   } else {
       // previewBlock.style.display = 'none';
       previewBlock.style.right = '-100%';
       previewButton.style.filter = 'invert(0)';
   }
-  UpdatePreview();
 });
 
 // Update Preview Photo On Input
@@ -284,14 +281,15 @@ function UpdatePreview() {
     var description = formData['description'].value;
     var email = formData['email'].value;
     var links = "";
+    var photoCode = "";
+    var themePath = "";
 
     // Links
-    for (var i = 0; i < linkCount + 1; i++) {
+    for (var i = 0; i < linkCount; i++) {
         var linkId = `links[${i}]`;
         var linkUrl = document.getElementById(linkId + "[url]").value;
         var linkName = document.getElementById(linkId + "[name]").value;
         var linkIcon = document.getElementById(linkId + "[icon]").value;
-        var photoCode = "";
 
         if(linkUrl !== ""){
             if(linkIcon !== ""){
@@ -315,37 +313,45 @@ function UpdatePreview() {
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
     // Add path to files
-    var themePath = theme.value;
+    if(theme.value !== "")
+    {
+      let jsonString = theme.value.match(/{.*}/)[0];
+      var json = JSON.parse(jsonString);
+      themePath = "themes/" + json.id;
+    }
+    else themePath = "themes/darkmode";
 
     // Add Style
-    var themeStylePath = themePath + "/style.css";
-    console.log(themePath);
-    if(themePath == "") themeStylePath = "http://localhost:3000/src/default.css";
+    var themeStylePath = themeUrl + "/" + themePath+ "/" + "style.css";
+
+    // Add JS
+    var themeJSPath = themeUrl + "/" + themePath+ "/" + "index.js";
 
     // Update Preview
-    var previewCode = 
+    var previewHTMLCode = 
     `<html>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="${themeStylePath}">
       </head>
-      <body style="overload-y: auto;">
+      <body>
         ${photoCode}
         ${name}
         ${description}
-        ${email}
-        ${links}
+        <div id="links">
+          ${links}
+          ${email}
+        </div>
       </body>
-      <script src="${themePath}/index.js"></script>
+      <script src="${themeJSPath}"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
       <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
     </html>`;
 
-    var blob = new Blob([previewCode], { type: 'text/html' });
+    var blob = new Blob([previewHTMLCode], { type: 'text/html' });
     var url = URL.createObjectURL(blob);
     previewBlock.innerHTML = `<object style="width: 100%; height: 100%;" type='text/html' data='${url}'></object>`;
-    
 };
 
 // Add Listner for all links on file Load
@@ -355,6 +361,7 @@ for (var i = 0; i < linkCount; i++) {
   document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
   document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
 }
+
 // Add Listner for all forms inputs on file Load
 formData['name'].addEventListener('input', UpdatePreview);
 formData['url'].addEventListener('input', UpdatePreview);
