@@ -234,7 +234,7 @@ var theme = document.getElementById('theme');
 // Real time variables
 var preview = false;
 var photo = "";
-var linkCount = Number(additionalLinkButton.getAttribute("data-index"));
+var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
 const styleElement = document.createElement('style');
 
 // Preview Button functionality

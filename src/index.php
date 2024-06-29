@@ -49,7 +49,7 @@ $lastsite_index = count($sites) - 1;
   <meta name="keywords" content="linkfree, linktree, link in bio, link in bio alternative, linkfree generator, linktree generator, link in bio generator">
   <meta property="og:title" content="LinkFree Generator">
   <meta property="og:description" content="Create your own LinkFree and have all your links in one place">
-  <meta property="og:url" content="https://chriskthomas.github.io/linkfree-generator/">
+  <meta property="og:url" content="https://linkfree.ckt.im/">
   <meta property="og:image" content="https://lh3.googleusercontent.com/p/AF1QipMjTWdGPL1Ch8Q0poYcH5vhl_tvqF-1o1_4slJD=s680-w680-h510">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LinkFree Generator">
