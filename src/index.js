@@ -268,7 +268,7 @@ formData['photo'].addEventListener('input', (e) => {
 // Add Listner for additionalLinkButton and for form data
 additionalLinkButton.addEventListener('click', () => {
     linkCount++;
-    var linkId = `links[${linkCount}]`;
+    var linkId = `links[${linkCount - 1}]`;
     document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
     document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
     document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
