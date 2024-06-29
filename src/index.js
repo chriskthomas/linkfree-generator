@@ -1,5 +1,5 @@
 const localStorageIgnore = ["photo"];
-const themeUrl =  "https://cdn.jsdelivr.net/npm/linkfree-themes@1.1.0";
+const themeUrl =  document.getElementById("themes-source").value;
 
 // Elements
 const addCustomLinkButton = document.querySelector("a.btn");
@@ -282,7 +282,6 @@ function UpdatePreview() {
     var email = formData['email'].value;
     var links = "";
     var photoCode = "";
-    var themePath = "";
 
     // Links
     for (var i = 0; i < linkCount; i++) {
@@ -312,46 +311,59 @@ function UpdatePreview() {
     if(description !== '') description =`<p id="description">${description}</p>`;
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
-    // Add path to files
-    if(theme.value !== "")
-    {
-      let jsonString = theme.value.match(/{.*}/)[0];
-      var json = JSON.parse(jsonString);
-      themePath = "themes/" + json.id;
-    }
-    else themePath = "themes/darkmode";
-
-    // Add Style
-    var themeStylePath = themeUrl + "/" + themePath+ "/" + "style.css";
-
-    // Add JS
-    var themeJSPath = themeUrl + "/" + themePath+ "/" + "index.js";
+    // Read theme data
+    var json = theme.value ? JSON.parse(theme.value) : {};
+    var themeStylePath = json.css ? themeUrl + "/" + json.css : `default.css`;
+    var themeScriptTag = json.js ? `<script src="${themeUrl + "/" + json.js}"></script>` : "";
 
     // Update Preview
-    var previewHTMLCode = 
-    `<html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="${themeStylePath}">
-      </head>
-      <body>
-        ${photoCode}
-        ${name}
-        ${description}
-        <div id="links">
-          ${links}
-          ${email}
-        </div>
-      </body>
-      <script src="${themeJSPath}"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
-      <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
-    </html>`;
+    var previewBody = 
+    `${photoCode} ${name} ${description}
+    <div id="links">
+      ${links}
+      ${email}
+    </div>
+    ${themeScriptTag}
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>`;
 
-    var blob = new Blob([previewHTMLCode], { type: 'text/html' });
-    var url = URL.createObjectURL(blob);
-    previewBlock.innerHTML = `<object style="width: 100%; height: 100%;" type='text/html' data='${url}'></object>`;
+    // If previewBlock is empty, append the iframe
+    if (previewBlock.childElementCount === 0) {
+        // Only define the HTML code once to avoid flickering
+        var previewHTMLCode = 
+        `<html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta charset="UTF-8">
+            <link id="theme-stylesheet" rel="stylesheet" href="${themeStylePath}">
+          </head>
+          <body>
+            ${previewBody}
+          </body>
+        </html>`;
+
+        // Create iframe to include in previewBlock
+        const preview_iframe = document.createElement("iframe");
+        preview_iframe.style.width = "100%";
+        preview_iframe.style.height = "100%";
+        preview_iframe.srcdoc = previewHTMLCode;
+        preview_iframe.id = "preview_iframe";
+
+        // Append the iframe to the previewBlock
+        previewBlock.appendChild(preview_iframe);
+    } else {
+        // Get the iframe
+        const preview_iframe = document.getElementById("preview_iframe");
+
+        // Update the iframe body content
+        preview_iframe.contentWindow.document.body.innerHTML = previewBody;
+
+        // If the theme has changed, update the stylesheet
+        var preview_theme_style = preview_iframe.contentWindow.document.getElementById("theme-stylesheet");
+        if (preview_theme_style.href !== themeStylePath) {
+            preview_theme_style.href = themeStylePath;
+        }
+    }
 };
 
 // Add Listner for all links on file Load
