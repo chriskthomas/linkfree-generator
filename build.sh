@@ -7,6 +7,7 @@ rm -rf dist
 mkdir dist
 php src/index.php | minify --type html -o dist/index.html
 minify -o dist/default.css src/default.css
+minify -o dist/index.css src/index.css
 minify -o dist/index.js src/index.js
 
 # Copy other assets
