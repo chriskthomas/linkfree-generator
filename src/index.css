@@ -1,0 +1,44 @@
+:root{
+    --buttonSize: 70px;
+    --buttonOffset: 10px;
+    --buttonRadius: 10px;
+    --previewWidth: 30vw;
+    --previewHeight: 100vh;
+    --previewXOffset: 0;
+    --previewYOffset: 0;
+    --animationDuration: 500ms;
+}
+#previewButton {
+    position: fixed;
+    width: var(--buttonSize);
+    height: var(--buttonSize);
+    bottom: var(--buttonOffset);
+    right: var(--buttonOffset);
+    border-radius: var(--buttonRadius);
+    z-index: 2;
+}
+
+#previewButton > *{
+    width: 100%;
+    height: 100%;
+}
+
+#previewBlock{
+    position: fixed;
+    top: var(--previewYOffset);
+    right: var(--previewXOffset);
+    width: var(--previewWidth);
+    height: var(--previewHeight);
+    z-index: 1;
+    transition: var(--animationDuration);
+    right: -100%;
+}
+
+@media screen and (max-width: 1000px){
+    #previewButton{
+        display: none;
+    }
+    #previewBlock{
+        display: none;
+    }
+}

@@ -43,7 +43,24 @@ $lastsite_index = count($sites) - 1;
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Create your own LinkFree and have all your links in one place">
+  <meta name="author" content="Chris K. Thomas">
+  <meta name="keywords" content="linkfree, linktree, link in bio, link in bio alternative, linkfree generator, linktree generator, link in bio generator">
+  <meta property="og:title" content="LinkFree Generator">
+  <meta property="og:description" content="Create your own LinkFree and have all your links in one place">
+  <meta property="og:url" content="https://chriskthomas.github.io/linkfree-generator/">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/p/AF1QipMjTWdGPL1Ch8Q0poYcH5vhl_tvqF-1o1_4slJD=s680-w680-h510">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LinkFree Generator">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LinkFree Generator">
+  <meta name="twitter:description" content="Create your own LinkFree and have all your links in one place">
+  <meta name="twitter:image" content="https://lh3.googleusercontent.com/p/AF1QipMjTWdGPL1Ch8Q0poYcH5vhl_tvqF-1o1_4slJD=s680-w680-h510">
+  
   <title>LinkFree Generator</title>
+  <link rel="stylesheet" href="index.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
@@ -53,7 +70,7 @@ $lastsite_index = count($sites) - 1;
     <p>
       Fill out this form to generate your own single page website. All fields are optional except for your name. So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code> file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or DigitalOcean Apps.
     </p>
-    <form class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+    <form id="form" class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" id="name" name="name" class="form-control" placeholder="Chris K. Thomas" required>
@@ -102,7 +119,7 @@ $lastsite_index = count($sites) - 1;
         </div>
       <?php } ?>
       <?php if ($num_clinks < 50) { ?>
-        <a class="btn btn-secondary mb-2" data-index="<?= ($lastsite_index + $num_clinks) ?>" role="button">+ Add Additional Link</a>
+        <a id="additionalLink" class="btn btn-secondary mb-2" data-index="<?= ($lastsite_index + $num_clinks) ?>" role="button">+ Add Additional Link</a>
       <?php } ?>
       <div class="mb-3">
         <div class="form-text">
@@ -154,7 +171,11 @@ $lastsite_index = count($sites) - 1;
 
     </div>
   </footer>
+  
+  <button id="previewButton"><ion-icon name="eye"></ion-icon></button>
+  <div id="previewBlock"></div>
   <script src="./index.js"></script>
-</body>
 
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+</body>
 </html>
