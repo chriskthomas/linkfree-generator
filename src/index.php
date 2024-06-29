@@ -50,14 +50,14 @@ $lastsite_index = count($sites) - 1;
   <meta property="og:title" content="LinkFree Generator">
   <meta property="og:description" content="Create your own LinkFree and have all your links in one place">
   <meta property="og:url" content="https://linkfree.ckt.im/">
-  <meta property="og:image" content="https://lh3.googleusercontent.com/p/AF1QipMjTWdGPL1Ch8Q0poYcH5vhl_tvqF-1o1_4slJD=s680-w680-h510">
+  <meta property="og:image" content='https://opengraph.githubassets.com/<?=hash("sha256", date("Y-m-d H:i:s T"))?>/chriskthomas/linkfree-generator'>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LinkFree Generator">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LinkFree Generator">
   <meta name="twitter:description" content="Create your own LinkFree and have all your links in one place">
-  <meta name="twitter:image" content="https://lh3.googleusercontent.com/p/AF1QipMjTWdGPL1Ch8Q0poYcH5vhl_tvqF-1o1_4slJD=s680-w680-h510">
+  <meta name="twitter:image" content='https://opengraph.githubassets.com/<?=hash("sha256", date("Y-m-d H:i:s T"))?>/chriskthomas/linkfree-generator'>
   
   <title>LinkFree Generator</title>
   <link rel="stylesheet" href="index.css">
