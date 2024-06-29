@@ -30,13 +30,21 @@ function createLinkField(name) {
   field.type = "text";
   field.className = "form-control";
 
-  if (name != "url") {
+  // Add event listener to update the preview (use "blur" for icon and "input" for the rest)
+  field.addEventListener(name === "icon" ? "blur" : "input", UpdatePreview);
+
+  if (name === "url") {
+    field.placeholder = "Link";
+    field.ariaPlaceholder = "Link";
+
+    // If name is "url", add an event listener to add the protocol if missing
+    field.addEventListener("blur", (event) => {
+      addProtocolIfMissing(event.target);
+    });
+  } else {
     name = name.charAt(0).toUpperCase() + name.slice(1);
     field.placeholder = name;
     field.ariaPlaceholder = name;
-  } else {
-    field.placeholder = "Link";
-    field.ariaPlaceholder = "Link";
   }
 
   return field;
@@ -234,7 +242,6 @@ var theme = document.getElementById('theme');
 // Real time variables
 var preview = false;
 var photo = "";
-var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
 const styleElement = document.createElement('style');
 
 // Preview Button functionality
@@ -265,16 +272,7 @@ formData['photo'].addEventListener('input', (e) => {
     }
 });
 
-// Add Listner for additionalLinkButton and for form data
-additionalLinkButton.addEventListener('click', () => {
-    linkCount++;
-    var linkId = `links[${linkCount - 1}]`;
-    document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
-    document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
-    document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
-});
-
-// Update Prview Function
+// Update Preview Function
 function UpdatePreview() {
     var name = formData['name'].value;
     var mainUrl= formData['url'].value;
@@ -284,7 +282,7 @@ function UpdatePreview() {
     var photoCode = "";
 
     // Links
-    for (var i = 0; i < linkCount; i++) {
+    for (var i = 0; i <= linksIndex; i++) {
         var linkId = `links[${i}]`;
         var linkUrl = document.getElementById(linkId + "[url]").value;
         var linkName = document.getElementById(linkId + "[name]").value;
@@ -366,15 +364,16 @@ function UpdatePreview() {
     }
 };
 
-// Add Listner for all links on file Load
-for (var i = 0; i < linkCount; i++) {
+// Add Listener for all links on file Load
+for (var i = 0; i <= linksIndex; i++) {
   var linkId = `links[${i}]`;
   document.getElementById(linkId + "[url]").addEventListener('input', UpdatePreview);
   document.getElementById(linkId + "[name]").addEventListener('input', UpdatePreview);
-  document.getElementById(linkId + "[icon]").addEventListener('input', UpdatePreview);
+  // Use blur for icons to avoid failed svg requests
+  document.getElementById(linkId + "[icon]").addEventListener('blur', UpdatePreview);
 }
 
-// Add Listner for all forms inputs on file Load
+// Add Listener for all forms inputs on file Load
 formData['name'].addEventListener('input', UpdatePreview);
 formData['url'].addEventListener('input', UpdatePreview);
 formData['description'].addEventListener('input', UpdatePreview);
