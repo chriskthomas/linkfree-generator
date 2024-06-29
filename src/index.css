@@ -23,6 +23,12 @@
     height: 100%;
 }
 
+#previewButton:hover{
+    cursor: pointer;
+    background-color: gray;
+    transition: var(--animationDuration);
+}
+
 #previewBlock{
     position: fixed;
     top: var(--previewYOffset);
@@ -34,11 +40,14 @@
     right: -100%;
 }
 
-@media screen and (max-width: 1000px){
-    #previewButton{
-        display: none;
-    }
+@media screen and (max-width: 1200px){
     #previewBlock{
-        display: none;
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 700px){
+    #previewBlock{
+        width: 100vw;
     }
 }

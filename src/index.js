@@ -234,7 +234,7 @@ var theme = document.getElementById('theme');
 // Real time variables
 var preview = false;
 var photo = "";
-var linkCount = Number(additionalLinkButton.getAttribute("data-index"));
+var linkCount = Number(additionalLinkButton.getAttribute("data-index")) + 1;
 const styleElement = document.createElement('style');
 
 // Preview Button functionality
@@ -308,7 +308,7 @@ function UpdatePreview() {
 
     // Check if data is added
     if(photo !== '') photoCode = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
-    if(name !== '') name = `<a href="${mainUrl}"><h1 id="userName">${name}</h1></a>`;
+    if(name !== '') name = `<a href="${mainUrl}" target="_blank"><h1 id="userName">${name}</h1></a>`;
     if(description !== '') description =`<p id="description">${description}</p>`;
     if(email !== '') email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
 
