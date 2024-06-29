@@ -179,7 +179,7 @@ $lastsite_index = count($sites) - 1;
     </div>
   </footer>
 
-  <button id="previewButton">
+  <button id="previewButton" aria-label="Preview">
     <ion-icon name="eye"></ion-icon>
   </button>
   <div id="previewBlock"></div>
