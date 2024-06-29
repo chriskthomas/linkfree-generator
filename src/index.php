@@ -1,5 +1,6 @@
 <?php
 $themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.1.0";
+$ionicons_source = "https://cdn.jsdelivr.net/npm/ionicons@7.4.0";
 
 $sites = [
   [
@@ -50,15 +51,15 @@ $lastsite_index = count($sites) - 1;
   <meta property="og:title" content="LinkFree Generator">
   <meta property="og:description" content="Create your own LinkFree and have all your links in one place">
   <meta property="og:url" content="https://linkfree.ckt.im/">
-  <meta property="og:image" content='https://opengraph.githubassets.com/<?=hash("sha256", date("Y-m-d H:i:s T"))?>/chriskthomas/linkfree-generator'>
+  <meta property="og:image" content='https://opengraph.githubassets.com/<?= hash("sha256", date("Y-m-d H:i:s T")) ?>/chriskthomas/linkfree-generator'>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LinkFree Generator">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LinkFree Generator">
   <meta name="twitter:description" content="Create your own LinkFree and have all your links in one place">
-  <meta name="twitter:image" content='https://opengraph.githubassets.com/<?=hash("sha256", date("Y-m-d H:i:s T"))?>/chriskthomas/linkfree-generator'>
-  
+  <meta name="twitter:image" content='https://opengraph.githubassets.com/<?= hash("sha256", date("Y-m-d H:i:s T")) ?>/chriskthomas/linkfree-generator'>
+
   <title>LinkFree Generator</title>
   <link rel="stylesheet" href="index.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -68,7 +69,10 @@ $lastsite_index = count($sites) - 1;
   <div class="container my-3">
     <h1>Create your own LinkFree!</h1>
     <p>
-      Fill out this form to generate your own single page website. All fields are optional except for your name. So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code> file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel, Netlify, or DigitalOcean Apps.
+      Fill out this form to generate your own single page website. All fields are optional except for your name.
+      So, don't worry if you don't have all these accounts. The output will be a single <code>index.html</code>
+      file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel,
+      Netlify, or DigitalOcean Apps.
     </p>
     <form id="form" class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
       <div class="mb-3">
@@ -89,7 +93,8 @@ $lastsite_index = count($sites) - 1;
       <div class="mb-3">
         <label for="photo" class="form-label">Photo</label>
         <input type="file" id="photo" name="photo" class="form-control">
-        <div class="form-text">Make it small and square (about 220x220px). It will be embedded into the page (optional, max 2mb).</div>
+        <div class="form-text">Make it small and square (about 220x220px). It will be embedded into the page
+          (optional, max 2mb).</div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
@@ -123,7 +128,8 @@ $lastsite_index = count($sites) - 1;
       <?php } ?>
       <div class="mb-3">
         <div class="form-text">
-          For custom links, you may use <a href="https://ionic.io/ionicons">any icon from ionicons</a> by name. For example, <code>logo-mastodon</code>. Icon field may be left blank.
+          For custom links, you may use <a href="https://ionic.io/ionicons">any icon from ionicons</a> by
+          name. For example, <code>logo-mastodon</code>. Icon field may be left blank.
         </div>
       </div>
       <div class="mb-3">
@@ -138,6 +144,7 @@ $lastsite_index = count($sites) - 1;
           You can <a href="https://chriskthomas.github.io/linkfree-themes/">preview themes here</a>.
         </div>
         <input type="hidden" id="themes-source" name="themes-source" value="<?= $themes_source ?>">
+        <input type="hidden" id="ionicons-source" name="ionicons-source" value="<?= $ionicons_source ?>">
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" id="ispreview" name="ispreview" class="form-check-input">
@@ -171,11 +178,15 @@ $lastsite_index = count($sites) - 1;
 
     </div>
   </footer>
-  
-  <button id="previewButton"><ion-icon name="eye"></ion-icon></button>
+
+  <button id="previewButton">
+    <ion-icon name="eye"></ion-icon>
+  </button>
   <div id="previewBlock"></div>
   <script src="./index.js"></script>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+  <script type="module" src="<?= $ionicons_source ?>/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="<?= $ionicons_source ?>/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>
