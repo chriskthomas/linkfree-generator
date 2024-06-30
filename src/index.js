@@ -152,7 +152,7 @@ function loadFormFromLocalStorage() {
   const data = JSON.parse(localStorage.getItem("form"));
   if (data) {
     Object.keys(data).forEach((key) => {
-      let input = document.querySelector(`[name="${key}"]`);
+      let input = document.querySelector(`input[name="${key}"]`);
 
       // If the input is hidden, continue
       if (input && input.type === "hidden") {
