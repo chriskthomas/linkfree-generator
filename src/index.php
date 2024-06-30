@@ -61,7 +61,6 @@ $lastsite_index = count($sites) - 1;
   <meta name="twitter:image" content='https://opengraph.githubassets.com/<?= hash("sha256", date("Y-m-d H:i:s T")) ?>/chriskthomas/linkfree-generator'>
 
   <title>LinkFree Generator</title>
-  <link rel="stylesheet" href="index.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
@@ -179,10 +178,10 @@ $lastsite_index = count($sites) - 1;
     </div>
   </footer>
 
-  <button id="previewButton" aria-label="Preview">
-    <ion-icon name="eye"></ion-icon>
+  <button id="previewButton" class="btn btn-info btn-lg position-fixed bottom-0 end-0 d-flex align-items-center gap-1 z-2 m-3">
+    <ion-icon name="eye"></ion-icon> Preview
   </button>
-  <div id="previewBlock"></div>
+  <div id="previewBlock" class="offcanvas offcanvas-end z-1"></div>
   <script src="./index.js"></script>
 
   <script type="module" src="<?= $ionicons_source ?>/dist/ionicons/ionicons.esm.js"></script>

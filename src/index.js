@@ -152,7 +152,9 @@ function loadFormFromLocalStorage() {
   const data = JSON.parse(localStorage.getItem("form"));
   if (data) {
     Object.keys(data).forEach((key) => {
-      let input = document.querySelector(`input[name="${key}"]`);
+      let input = document.querySelector(
+        `input[name="${key}"], select[name="${key}"]`
+      );
 
       // If the input is hidden, continue
       if (input && input.type === "hidden") {
@@ -208,10 +210,6 @@ form.addEventListener("submit", (e) => {
   form.submit();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadFormFromLocalStorage();
-});
-
 let urlInputs = document.querySelectorAll('input[type="url"]');
 urlInputs.forEach((input) => {
   input.addEventListener("blur", (event) => {
@@ -241,23 +239,12 @@ var formData = document.getElementById("form");
 var theme = document.getElementById("theme");
 
 // Real time variables
-var preview = false;
 var photo = "";
-const styleElement = document.createElement("style");
 
 // Preview Button functionality
 previewButton.addEventListener("click", () => {
-  preview = !preview;
-  if (preview) {
-    // previewBlock.style.display = 'block';
-    previewBlock.style.right = "0";
-    previewButton.style.filter = "invert(1)";
-    UpdatePreview();
-  } else {
-    // previewBlock.style.display = 'none';
-    previewBlock.style.right = "-100%";
-    previewButton.style.filter = "invert(0)";
-  }
+  previewBlock.classList.toggle("show");
+  previewButton.classList.toggle("active");
 });
 
 // Update Preview Photo On Input
@@ -344,8 +331,7 @@ function UpdatePreview() {
 
     // Create iframe to include in previewBlock
     const preview_iframe = document.createElement("iframe");
-    preview_iframe.style.width = "100%";
-    preview_iframe.style.height = "100%";
+    preview_iframe.classList.add("w-100", "h-100");
     preview_iframe.srcdoc = previewHTMLCode;
     preview_iframe.id = "preview_iframe";
 
@@ -388,3 +374,12 @@ formData["url"].addEventListener("input", UpdatePreview);
 formData["description"].addEventListener("input", UpdatePreview);
 formData["email"].addEventListener("input", UpdatePreview);
 theme.addEventListener("input", UpdatePreview);
+
+/*****************************************************/
+/******************** Run on Load ********************/
+/*****************************************************/
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadFormFromLocalStorage();
+  UpdatePreview();
+});
