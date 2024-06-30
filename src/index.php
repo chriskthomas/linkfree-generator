@@ -182,7 +182,7 @@ $lastsite_index = count($sites) - 1;
     <ion-icon name="eye"></ion-icon> Preview
   </button>
   <div id="previewBlock" class="offcanvas offcanvas-end z-1"></div>
-  <script src="./index.js"></script>
+  <script src="index.js" integrity="sha384-<?= base64_encode(hash_file("sha384", "index.js", true)) ?>"></script>
 
   <script type="module" src="<?= $ionicons_source ?>/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="<?= $ionicons_source ?>/dist/ionicons/ionicons.js"></script>
