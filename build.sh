@@ -6,14 +6,13 @@ set -e
 rm -rf dist
 
 # Build
-mkdir dist && cd dist
+mkdir dist
 
 # Minify static assets
-minify -o default.css ../src/default.css
-minify -o index.js ../src/index.js
+minify -o dist/default.css src/default.css
 
 # Copy other assets
-cp ../src/api.php ../src/template.php ./
+cp src/api.php src/template.php dist/
 
 # Compile PHP and minify
-php ../src/index.php | minify --type html -o index.html
+cd src/ && php index.php | minify --type html -o ../dist/index.html

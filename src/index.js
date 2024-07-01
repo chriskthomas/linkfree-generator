@@ -254,102 +254,149 @@ formData["photo"].addEventListener("input", (e) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       photo = e.target.result;
-      UpdatePreview();
+      UpdatePreview(e);
     };
     reader.readAsDataURL(photoData);
   }
 });
 
 // Update Preview Function
-function UpdatePreview() {
+function UpdatePreview(e = null) {
   var name = formData["name"].value;
   var mainUrl = formData["url"].value;
   var description = formData["description"].value;
   var email = formData["email"].value;
-  var links = "";
-  var photoCode = "";
 
-  // Links
-  for (var i = 0; i <= linksIndex; i++) {
-    var linkId = `links[${i}]`;
-    var linkUrl = document.getElementById(linkId + "[url]").value;
-    var linkName = document.getElementById(linkId + "[name]").value;
-    var linkIcon = document.getElementById(linkId + "[icon]").value;
+  // Define a function that creates a link element
+  function createLinkElement(href, icon = null, name = null, target = null) {
+    // Create link
+    let userLink = document.createElement("a");
 
-    if (linkUrl !== "") {
-      if (linkIcon !== "") {
-        links += `<a class="link" href="${linkUrl}" target="_blank">
-                <ion-icon name="${linkIcon}"></ion-icon>
-                ${linkName} </a>`;
-      } else {
-        links += `<a class="link" href="${linkUrl}" target="_blank">
-                ${linkName} </a>`;
-      }
+    // Set link attributes
+    userLink.href = href;
+    userLink.target = target;
+    userLink.classList.add("link");
+
+    // Create icon
+    if (icon) {
+      let userIcon = document.createElement("ion-icon");
+      userIcon.setAttribute("name", icon);
+      userLink.appendChild(userIcon);
     }
+
+    // Create label
+    if (name) {
+      userLink.appendChild(document.createTextNode(` ${name}`));
+    }
+
+    return userLink;
   }
 
+  // Build entire body from scratch
+  var previewBody = document.createElement("body");
+
   // Check if data is added
-  if (photo !== "")
-    photoCode = `<img id="userPhoto" src="${photo}" alt="User Photo"></img>`;
-  if (name !== "")
-    name = `<a href="${mainUrl}" target="_blank"><h1 id="userName">${name}</h1></a>`;
-  if (description !== "")
-    description = `<p id="description">${description}</p>`;
-  if (email !== "")
-    email = `<a class="link" href="mailto:${email}" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>`;
+  if (photo !== "") {
+    let userImg = document.createElement("img");
+    userImg.id = "userPhoto";
+    userImg.src = photo;
+    userImg.alt = "User Photo";
+    previewBody.appendChild(userImg);
+  }
+  if (name !== "") {
+    // Create username link
+    let userUrl = document.createElement("a");
+    userUrl.href = mainUrl;
+    userUrl.target = "_blank";
+
+    let userName = document.createElement("h1");
+    userName.id = "userName";
+    userName.appendChild(document.createTextNode(name));
+    userUrl.appendChild(userName);
+
+    previewBody.appendChild(userUrl);
+  }
+  if (description !== "") {
+    let userDescription = document.createElement("p");
+    userDescription.id = "description";
+    userDescription.appendChild(document.createTextNode(description));
+    previewBody.appendChild(userDescription);
+  }
+
+  // Links
+  {
+    // Create links div
+    let linksDiv = document.createElement("div");
+    linksDiv.id = "links";
+
+    for (var i = 0; i <= linksIndex; i++) {
+      let linkId = `links[${i}]`;
+      let linkUrl = document.getElementById(linkId + "[url]").value;
+      let linkName = document.getElementById(linkId + "[name]").value;
+      let linkIcon = document.getElementById(linkId + "[icon]").value;
+
+      if (linkUrl !== "") {
+        let userLink = createLinkElement(linkUrl, linkIcon, linkName, "_blank");
+        linksDiv.appendChild(userLink);
+      }
+    }
+
+    if (email !== "") {
+      // Create email link
+      let userEmail = createLinkElement(`mailto:${email}`, "mail", "Email");
+      linksDiv.appendChild(userEmail);
+    }
+
+    // Append links to the body
+    previewBody.appendChild(linksDiv);
+  }
 
   // Read theme data
   var json = theme.value ? JSON.parse(theme.value) : {};
   var themeStylePath = json.css ? themeUrl + "/" + json.css : `default.css`;
-  var themeScriptTag = json.js
-    ? `<script src="${themeUrl + "/" + json.js}"></script>`
-    : "";
 
-  // Update Preview
-  var previewBody = `${photoCode} ${name} ${description}
-    <div id="links">
-      ${links}
-      ${email}
-    </div>
-    ${themeScriptTag}
-    <script type="module" src="${ioniconsUrl}/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="${ioniconsUrl}/dist/ionicons/ionicons.js"></script>`;
+  if (json.js) {
+    let themeScript = document.createElement("script");
+    themeScript.src = themeUrl + "/" + json.js;
+    previewBody.appendChild(themeScript);
+  }
+
+  // Append ionicons module script to the body
+  var ioniconsScriptModule = document.createElement("script");
+  ioniconsScriptModule.src = `${ioniconsUrl}/dist/ionicons/ionicons.esm.js`;
+  ioniconsScriptModule.type = "module";
+  previewBody.appendChild(ioniconsScriptModule);
+
+  // Append ionicons nomodule script to the body
+  var ioniconsScriptNoModule = document.createElement("script");
+  ioniconsScriptNoModule.src = `${ioniconsUrl}/dist/ionicons/ionicons.js`;
+  ioniconsScriptNoModule.noModule = true;
+  previewBody.appendChild(ioniconsScriptNoModule);
+
+  // Only define the HTML code once to avoid flickering
+  var previewHTMLCode = `<html><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="UTF-8"><link id="theme-stylesheet" rel="stylesheet" href="${themeStylePath}"></head>${previewBody.outerHTML}</html>`;
 
   // If previewBlock is empty, append the iframe
   if (previewBlock.childElementCount === 0) {
-    // Only define the HTML code once to avoid flickering
-    var previewHTMLCode = `<html>
-          <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta charset="UTF-8">
-            <link id="theme-stylesheet" rel="stylesheet" href="${themeStylePath}">
-          </head>
-          <body>
-            ${previewBody}
-          </body>
-        </html>`;
-
-    // Create iframe to include in previewBlock
-    const preview_iframe = document.createElement("iframe");
+    // On first run, create iframe to include in previewBlock
+    let preview_iframe = document.createElement("iframe");
     preview_iframe.classList.add("w-100", "h-100");
     preview_iframe.srcdoc = previewHTMLCode;
     preview_iframe.id = "preview_iframe";
 
     // Append the iframe to the previewBlock
     previewBlock.appendChild(preview_iframe);
+  } else if (e && e.target === theme) {
+    // if the theme is changed, reset the srcdoc
+    let preview_iframe = document.getElementById("preview_iframe");
+    preview_iframe.srcdoc = previewHTMLCode;
   } else {
     // Get the iframe
-    const preview_iframe = document.getElementById("preview_iframe");
+    let preview_iframe = document.getElementById("preview_iframe");
 
     // Update the iframe body content
-    preview_iframe.contentWindow.document.body.innerHTML = previewBody;
-
-    // If the theme has changed, update the stylesheet
-    var preview_theme_style =
-      preview_iframe.contentWindow.document.getElementById("theme-stylesheet");
-    if (preview_theme_style.href !== themeStylePath) {
-      preview_theme_style.href = themeStylePath;
-    }
+    preview_iframe.contentWindow.document.body.innerHTML =
+      previewBody.innerHTML;
   }
 }
 
