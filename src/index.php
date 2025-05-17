@@ -1,5 +1,5 @@
 <?php
-$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.2.0";
+$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.2.1";
 $ionicons_source = "https://esm.sh/ionicons@8.0.8";
 
 $sites = [
