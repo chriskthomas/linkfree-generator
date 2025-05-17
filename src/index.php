@@ -1,6 +1,6 @@
 <?php
-$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.1.0";
-$ionicons_source = "https://cdn.jsdelivr.net/npm/ionicons@7.4.0";
+$themes_source = "https://esm.sh/linkfree-themes@1.1.0";
+$ionicons_source = "https://esm.sh/ionicons@8.0.8";
 
 $sites = [
   [
@@ -186,8 +186,8 @@ $lastsite_index = count($sites) - 1;
     <?php include "index.js" ?>
   </script>
 
-  <script type="module" src="<?= $ionicons_source ?>/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="<?= $ionicons_source ?>/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="<?= $ionicons_source ?>/loader"></script>
+  <script nomodule src="<?= $ionicons_source ?>/loader"></script>
 </body>
 
 </html>
