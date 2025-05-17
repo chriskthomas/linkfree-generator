@@ -1,5 +1,5 @@
 <?php
-$themes_source = "https://esm.sh/linkfree-themes@1.1.0";
+$themes_source = "https://esm.sh/linkfree-themes@1.2.0";
 $ionicons_source = "https://esm.sh/ionicons@8.0.8";
 
 $sites = [
