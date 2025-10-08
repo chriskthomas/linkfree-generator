@@ -1,5 +1,5 @@
 #| Builder Container
-FROM debian:bookworm-slim AS builder
+FROM debian:trixie-slim AS builder
 # Copy source files and build script
 COPY /src /src
 COPY --chmod=0755 build.sh /build.sh
@@ -10,7 +10,7 @@ RUN set -x \
     && /build.sh
 
 #| Main Container
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 RUN set -x \
     # create nginx user/group first, to be consistent throughout docker variants
     && groupadd --system --gid 101 nginx \
