@@ -268,7 +268,7 @@ function UpdatePreview(e = null) {
   var email = formData["email"].value;
 
   // --- Auto-detect usernames for known platforms ---
-  for (var i = 0; i <= linksIndex; i++) {
+  for (var i = 0; i < siteList.length; i++) {
     let linkId = `links[${i}]`;
     let linkUrl =
       document.getElementById(linkId + "[url]")?.value?.trim() || "";
@@ -286,7 +286,6 @@ function UpdatePreview(e = null) {
       if (match) {
         regex = new RegExp(match[1], match[2]);
       }
-      console.log(regex);
       if (regex.test(linkUrl)) {
         username = linkUrl.match(regex)?.[1];
         // If the checkbox is not checked, override linkName with the site name
