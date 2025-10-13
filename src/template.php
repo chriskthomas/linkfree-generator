@@ -63,7 +63,15 @@ if (is_uploaded_file($_FILES["photo"]["tmp_name"])) {
         } ?>
         <?php if (!empty($_POST["email"])) { ?>
             <!--email_off-->
-            <a class="link" href="mailto:<?= $_POST["email"] ?>" target="_blank"><ion-icon name="mail"></ion-icon> Email</a>
+            <!-- Show Email Address or "Email" in final output -->
+            <a class="link" href="mailto:<?= htmlspecialchars($_POST["email"]) ?>" target="_blank">
+            <ion-icon name="mail"></ion-icon>
+            <?php if (!empty($_POST["useusername"]["email"])): ?>
+                <?= htmlspecialchars($_POST["email"]) ?>
+            <?php else: ?>
+                <?= "Email" ?>
+            <?php endif; ?>
+            </a>
             <!--/email_off-->
         <?php } ?>
     </div>

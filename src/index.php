@@ -7,28 +7,34 @@ $sites = [
     "name" => "LinkedIn",
     "icon" => "logo-linkedin",
     "placeholder" => "https://linkedin.com/in/...",
+    "regex" => "/linkedin\\.com\\/in\\/([^\\/?#]+)/i"
   ],
   [
     "name" => "Instagram",
     "icon" => "logo-instagram",
     "placeholder" => "https://instagram.com/...",
+    "regex" => "/instagram\\.com\\/([^\\/?#]+)/i"
   ],
   [
     "name" => "Twitch",
     "icon" => "logo-twitch",
     "placeholder" => "https://twitch.tv/...",
+    "regex" => "/twitch\\.tv\\/([^\\/?#]+)/i"
   ],
   [
     "name" => "YouTube",
     "icon" => "logo-youtube",
     "placeholder" => "https://youtube.com/c/...",
+    "regex" => "/youtube\\.com\\/(?:c\\/|@|user\\/)?([^\\/?#]+)/i"
   ],
   [
     "name" => "X (Twitter)",
     "icon" => "logo-x",
     "placeholder" => "https://x.com/...",
+    "regex" => "/(?:x\\.com|twitter\\.com)\\/([^\\/?#]+)/i"
   ],
 ];
+
 
 $num_clinks = 3;
 
@@ -97,14 +103,24 @@ $lastsite_index = count($sites) - 1;
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="linkfree@ckt.im">
+        <input type="email" id="email" name="email" class="form-control" placeholder="linkfree@ckt.im"> 
+        <div class="form-check mt-1">
+          <input type="checkbox" id="useusername[email]" name="useusername[email]" class="form-check-input">
+          <label for="useusername[email]" class="form-check-label">Use email address as label?</label>
+        </div>
       </div>
       <?php foreach ($sites as $key => $site) { ?>
         <div class="mb-3">
           <label for="links[<?= $key ?>][url]" class="form-label"><?= $site["name"] ?> Link</label>
           <input type="hidden" id="links[<?= $key ?>][name]" name="links[<?= $key ?>][name]" value="<?= $site["name"] ?>">
           <input type="hidden" id="links[<?= $key ?>][icon]" name="links[<?= $key ?>][icon]" value="<?= $site["icon"] ?>">
-          <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="<?= $site["placeholder"] ?>">
+          <div class="d-flex align-items-center gap-3">
+            <input type="url" id="links[<?= $key ?>][url]" name="links[<?= $key ?>][url]" class="form-control" placeholder="<?= $site["placeholder"] ?>">
+            <div class="form-check m-0" style="width: 130px">
+              <input type="checkbox" id="useusername[<?= $key ?>]" name="useusername[<?= $key ?>]" class="form-check-input">
+              <label for="useusername[<?= $key ?>]" class="form-check-label small">Use Username</label>
+            </div>
+          </div>
         </div>
       <?php } ?>
       <?php for ($i = 1; $i <= $num_clinks; $i++) {
@@ -183,6 +199,7 @@ $lastsite_index = count($sites) - 1;
   </button>
   <div id="previewBlock" class="offcanvas offcanvas-end z-1"></div>
   <script>
+    const siteList = <?php echo json_encode($sites); ?>; // store so that index.js can access regex patterns
     <?php include "index.js" ?>
   </script>
 
