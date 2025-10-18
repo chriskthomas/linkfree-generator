@@ -267,6 +267,38 @@ function UpdatePreview(e = null) {
   var description = formData["description"].value;
   var email = formData["email"].value;
 
+  // --- Auto-detect usernames for known platforms ---
+  for (var i = 0; i < siteList.length; i++) {
+    let linkId = `links[${i}]`;
+    let linkUrl =
+      document.getElementById(linkId + "[url]")?.value?.trim() || "";
+    let linkNameInput = document.getElementById(linkId + "[name]");
+    let useUsername = document.getElementById(`useusername[${i}]`)?.checked;
+
+    if (!linkUrl) continue;
+
+    let username = null;
+
+    // Try to extract username using regex for known sites
+    for (const site of siteList) {
+      let regex; // safely recreate regex from PHP string
+      const match = site.regex.match(/^\/(.+)\/([gimsuy]*)$/);
+      if (match) {
+        regex = new RegExp(match[1], match[2]);
+      }
+      if (regex.test(linkUrl)) {
+        username = linkUrl.match(regex)?.[1];
+        // If the checkbox is not checked, override linkName with the site name
+        if (!useUsername) {
+          linkNameInput.value = site.name;
+        } else if (username) {
+          linkNameInput.value = username;
+        }
+        break;
+      }
+    }
+  }
+
   // Define a function that creates a link element
   function createLinkElement(href, icon = null, name = null, target = null) {
     // Create link
@@ -343,7 +375,10 @@ function UpdatePreview(e = null) {
 
     if (email !== "") {
       // Create email link
-      let userEmail = createLinkElement(`mailto:${email}`, "mail", "Email");
+      const emailUseUsername =
+        document.getElementById("useusername[email]")?.checked;
+      const emailLabel = emailUseUsername ? email : "Email"; // Show email address option
+      let userEmail = createLinkElement(`mailto:${email}`, "mail", emailLabel);
       linksDiv.appendChild(userEmail);
     }
 
@@ -421,6 +456,11 @@ formData["url"].addEventListener("input", UpdatePreview);
 formData["description"].addEventListener("input", UpdatePreview);
 formData["email"].addEventListener("input", UpdatePreview);
 theme.addEventListener("input", UpdatePreview);
+
+// Add listeners for all "useusername" checkboxes (email + links)
+document.querySelectorAll('input[id^="useusername"]').forEach((checkbox) => {
+  checkbox.addEventListener("change", UpdatePreview);
+});
 
 /*****************************************************/
 /******************** Run on Load ********************/
