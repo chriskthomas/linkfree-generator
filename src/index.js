@@ -254,6 +254,7 @@ formData["photo"].addEventListener("input", (e) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       photo = e.target.result;
+      document.getElementById("photoBase64").value = photo; //isso atualiza o campo hidden da foto, em index.php
       UpdatePreview(e);
     };
     reader.readAsDataURL(photoData);
@@ -266,6 +267,38 @@ function UpdatePreview(e = null) {
   var mainUrl = formData["url"].value;
   var description = formData["description"].value;
   var email = formData["email"].value;
+
+  // --- Auto-detect usernames for known platforms ---
+  for (var i = 0; i < siteList.length; i++) {
+    let linkId = `links[${i}]`;
+    let linkUrl =
+      document.getElementById(linkId + "[url]")?.value?.trim() || "";
+    let linkNameInput = document.getElementById(linkId + "[name]");
+    let useUsername = document.getElementById(`useusername[${i}]`)?.checked;
+
+    if (!linkUrl) continue;
+
+    let username = null;
+
+    // Try to extract username using regex for known sites
+    for (const site of siteList) {
+      let regex; // safely recreate regex from PHP string
+      const match = site.regex.match(/^\/(.+)\/([gimsuy]*)$/);
+      if (match) {
+        regex = new RegExp(match[1], match[2]);
+      }
+      if (regex.test(linkUrl)) {
+        username = linkUrl.match(regex)?.[1];
+        // If the checkbox is not checked, override linkName with the site name
+        if (!useUsername) {
+          linkNameInput.value = site.name;
+        } else if (username) {
+          linkNameInput.value = username;
+        }
+        break;
+      }
+    }
+  }
 
   // Define a function that creates a link element
   function createLinkElement(href, icon = null, name = null, target = null) {
@@ -343,7 +376,10 @@ function UpdatePreview(e = null) {
 
     if (email !== "") {
       // Create email link
-      let userEmail = createLinkElement(`mailto:${email}`, "mail", "Email");
+      const emailUseUsername =
+        document.getElementById("useusername[email]")?.checked;
+      const emailLabel = emailUseUsername ? email : "Email"; // Show email address option
+      let userEmail = createLinkElement(`mailto:${email}`, "mail", emailLabel);
       linksDiv.appendChild(userEmail);
     }
 
@@ -422,9 +458,83 @@ formData["description"].addEventListener("input", UpdatePreview);
 formData["email"].addEventListener("input", UpdatePreview);
 theme.addEventListener("input", UpdatePreview);
 
+// Add listeners for all "useusername" checkboxes (email + links)
+document.querySelectorAll('input[id^="useusername"]').forEach((checkbox) => {
+  checkbox.addEventListener("change", UpdatePreview);
+});
+
 /*****************************************************/
 /******************** Run on Load ********************/
 /*****************************************************/
+
+// Imports generated page
+const importButton = document.getElementById("importButton");
+const importFile = document.getElementById("importFile");
+
+importButton.addEventListener("click", () => importFile.click());
+
+importFile.addEventListener("change", () => {
+  const file = importFile.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const text = reader.result;
+
+    // Extracts JSON stored in HTML
+    const match = text.match(/<!--LINKFREE_DATA([\s\S]*?)LINKFREE_DATA-->/);
+    if (!match) {
+      alert("Este arquivo não contém dados para importar.");
+      return;
+    }
+
+    const json = JSON.parse(match[1].trim());
+
+    // Fill the fields
+    [
+      "name",
+      "url",
+      "description",
+      "email",
+      "theme"
+    ].forEach(key => {
+      const input = document.getElementById(key);
+      if (input) input.value = json[key] ?? "";
+    });
+
+    // Restore "useusername"
+    Object.entries(json.useusername ?? {}).forEach(([k, v]) => {
+      const checkbox = document.querySelector(`#useusername\\[${k}\\]`);
+      if (checkbox) checkbox.checked = true;
+    });
+
+    // Restore links
+    Object.entries(json.links ?? {}).forEach(([i, link]) => {
+      if (!document.querySelector(`[name="links[${i}][url]"]`)) {
+        createCustomLinkFields();
+      }
+      document.querySelector(`[name="links[${i}][name]"]`).value = link.name ?? "";
+      document.querySelector(`[name="links[${i}][icon]"]`).value = link.icon ?? "";
+      document.querySelector(`[name="links[${i}][url]"]`).value = link.url ?? "";
+    });
+
+    // Restore imported photo file
+    const imgMatch = text.match(/<img[^>]+src="([^"]+)"[^>]*id="userPhoto"[^>]*>/i);
+    if (imgMatch) {
+      const base64 = imgMatch[1]; //preview shows image
+      photo = base64;
+      document.getElementById("photoBase64").value = base64; //updates hidden photo field in index.php
+    }
+
+    // Forces preview
+    UpdatePreview();
+
+  };
+
+  reader.readAsText(file);
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFormFromLocalStorage();
