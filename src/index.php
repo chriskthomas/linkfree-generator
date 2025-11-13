@@ -34,8 +34,6 @@
       "regex" => "/(?:x\\.com|twitter\\.com)\\/([^\\/?#]+)/i"
     ],
   ];
-
-
   $num_clinks = 3;
 
   # Retrieve the list of themes and read the json file
