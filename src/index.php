@@ -1,49 +1,48 @@
 <?php
-$themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.2.1";
-$ionicons_source = "https://esm.sh/ionicons@8.0.8";
+  $themes_source = "https://cdn.jsdelivr.net/npm/linkfree-themes@1.2.1";
+  $ionicons_source = "https://esm.sh/ionicons@8.0.8";
 
-$sites = [
-  [
-    "name" => "LinkedIn",
-    "icon" => "logo-linkedin",
-    "placeholder" => "https://linkedin.com/in/...",
-    "regex" => "/linkedin\\.com\\/in\\/([^\\/?#]+)/i"
-  ],
-  [
-    "name" => "Instagram",
-    "icon" => "logo-instagram",
-    "placeholder" => "https://instagram.com/...",
-    "regex" => "/instagram\\.com\\/([^\\/?#]+)/i"
-  ],
-  [
-    "name" => "Twitch",
-    "icon" => "logo-twitch",
-    "placeholder" => "https://twitch.tv/...",
-    "regex" => "/twitch\\.tv\\/([^\\/?#]+)/i"
-  ],
-  [
-    "name" => "YouTube",
-    "icon" => "logo-youtube",
-    "placeholder" => "https://youtube.com/c/...",
-    "regex" => "/youtube\\.com\\/(?:c\\/|@|user\\/)?([^\\/?#]+)/i"
-  ],
-  [
-    "name" => "X (Twitter)",
-    "icon" => "logo-x",
-    "placeholder" => "https://x.com/...",
-    "regex" => "/(?:x\\.com|twitter\\.com)\\/([^\\/?#]+)/i"
-  ],
-];
+  $sites = [
+    [
+      "name" => "LinkedIn",
+      "icon" => "logo-linkedin",
+      "placeholder" => "https://linkedin.com/in/...",
+      "regex" => "/linkedin\\.com\\/in\\/([^\\/?#]+)/i"
+    ],
+    [
+      "name" => "Instagram",
+      "icon" => "logo-instagram",
+      "placeholder" => "https://instagram.com/...",
+      "regex" => "/instagram\\.com\\/([^\\/?#]+)/i"
+    ],
+    [
+      "name" => "Twitch",
+      "icon" => "logo-twitch",
+      "placeholder" => "https://twitch.tv/...",
+      "regex" => "/twitch\\.tv\\/([^\\/?#]+)/i"
+    ],
+    [
+      "name" => "YouTube",
+      "icon" => "logo-youtube",
+      "placeholder" => "https://youtube.com/c/...",
+      "regex" => "/youtube\\.com\\/(?:c\\/|@|user\\/)?([^\\/?#]+)/i"
+    ],
+    [
+      "name" => "X (Twitter)",
+      "icon" => "logo-x",
+      "placeholder" => "https://x.com/...",
+      "regex" => "/(?:x\\.com|twitter\\.com)\\/([^\\/?#]+)/i"
+    ],
+  ];
+  $num_clinks = 3;
 
+  # Retrieve the list of themes and read the json file
+  $themes_json = file_get_contents("{$themes_source}/index.json");
+  $themes = json_decode($themes_json, true);
 
-$num_clinks = 3;
-
-# Retreive the list of themes and read the json file
-$themes_json = file_get_contents("{$themes_source}/index.json");
-$themes = json_decode($themes_json, true);
-
-$lastsite_index = count($sites) - 1;
+  $lastsite_index = count($sites) - 1;
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -66,6 +65,7 @@ $lastsite_index = count($sites) - 1;
   <meta name="twitter:description" content="Create your own LinkFree and have all your links in one place">
   <meta name="twitter:image" content='https://opengraph.githubassets.com/<?= hash("sha256", date("Y-m-d H:i:s T")) ?>/chriskthomas/linkfree-generator'>
 
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
   <title>LinkFree Generator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -79,6 +79,9 @@ $lastsite_index = count($sites) - 1;
       file that you can upload to any static hosting provider such as GitHub Pages, Cloudflare Pages, Vercel,
       Netlify, or DigitalOcean Apps.
     </p>
+    <button type="button" id="importButton" class="btn btn-warning">Importar página existente</button>
+    <input type="file" id="importFile" accept=".html" hidden><br><br>
+
     <form id="form" class="mb-3" action="api.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
@@ -100,6 +103,7 @@ $lastsite_index = count($sites) - 1;
         <input type="file" id="photo" name="photo" class="form-control">
         <div class="form-text">Make it small and square (about 220x220px). It will be embedded into the page
           (optional, max 2mb).</div>
+        <input type="hidden" name="photoBase64" id="photoBase64">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>

@@ -1,26 +1,40 @@
 <?php
-// get the comment from the POST
-$description = $_POST["description"];
-$links = $_POST["links"];
+    // get the comment from the POST
+    $description = $_POST["description"];
+    $links = $_POST["links"];
 
-// Create theme object
-if (!empty($_POST["theme"])) {
-    $theme = json_decode($_POST["theme"], true);
-} else {
-    $theme = array();
-}
-
-// Convert uploaded photo to data URI
-if (is_uploaded_file($_FILES["photo"]["tmp_name"])) {
-    // process image
-    $imagesize = getimagesize($_FILES["photo"]["tmp_name"]);
-    if ($imagesize !== false) {
-        // client uploaded a bona fide image!
-        $photo_data = base64_encode(file_get_contents($_FILES["photo"]["tmp_name"]));
-        $user_photo = "data:" . $imagesize["mime"] . ";base64," . $photo_data;
+    // Create theme object
+    if (!empty($_POST["theme"])) {
+        $theme = json_decode($_POST["theme"], true);
+    } else {
+        $theme = array();
     }
-}
+
+    // Convert uploaded photo to data URI
+    if (is_uploaded_file($_FILES["photo"]["tmp_name"])) {
+        // process image
+        $imagesize = getimagesize($_FILES["photo"]["tmp_name"]);
+        if ($imagesize !== false) {
+            // client uploaded a bona fide image!
+            $photo_data = base64_encode(file_get_contents($_FILES["photo"]["tmp_name"]));
+            $user_photo = "data:" . $imagesize["mime"] . ";base64," . $photo_data;
+        }
+        
+    }
+
+    $photoBase64 = "";
+
+    if (isset($_FILES["photo"]) && $_FILES["photo"]["tmp_name"]) {
+        //Photo submitted during registration
+        $imageData = file_get_contents($_FILES["photo"]["tmp_name"]);
+        $mime = mime_content_type($_FILES["photo"]["tmp_name"]);
+        $photoBase64 = "data:$mime;base64," . base64_encode($imageData);
+    } elseif (!empty($_POST["photoBase64"])) {
+        //Photo retrieved from import
+        $photoBase64 = $_POST["photoBase64"];
+    }
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -38,10 +52,8 @@ if (is_uploaded_file($_FILES["photo"]["tmp_name"])) {
 </head>
 
 <body>
-    <?php if (!empty($user_photo)) { ?>
-        <img id="userPhoto" src="<?= $user_photo ?>" alt="User Photo">
-    <?php } ?>
-
+    <img src="<?php echo $photoBase64; ?>" id="userPhoto">
+    
     <a href="<?= (!empty($_POST["url"]) ? $_POST["url"] : ".") ?>">
         <h1 id="userName"><?= htmlspecialchars($_POST["name"]) ?></h1>
     </a>
@@ -81,5 +93,19 @@ if (is_uploaded_file($_FILES["photo"]["tmp_name"])) {
     <script type="module" src="<?= htmlspecialchars($_POST["ionicons-source"] . '/dist/ionicons/ionicons.esm.js') ?>"></script>
     <script nomodule src="<?= htmlspecialchars($_POST["ionicons-source"] . '/dist/ionicons/ionicons.js') ?>"></script>
 </body>
+<?php
+    // Capture all POST fields
+    $exportData = [
+        "name" => $_POST["name"],
+        "url" => $_POST["url"] ?? "",
+        "description" => $_POST["description"] ?? "",
+        "email" => $_POST["email"] ?? "",
+        "useusername" => $_POST["useusername"] ?? [],
+        "links" => $_POST["links"] ?? [],
+        "theme" => $_POST["theme"] ?? "",
+    ];
 
+    // Inserts JSON as a comment in final HTML
+    echo "\n<!--LINKFREE_DATA\n" . json_encode($exportData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\nLINKFREE_DATA-->";
+?>
 </html>

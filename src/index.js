@@ -254,6 +254,7 @@ formData["photo"].addEventListener("input", (e) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       photo = e.target.result;
+      document.getElementById("photoBase64").value = photo; //isso atualiza o campo hidden da foto, em index.php
       UpdatePreview(e);
     };
     reader.readAsDataURL(photoData);
@@ -465,6 +466,75 @@ document.querySelectorAll('input[id^="useusername"]').forEach((checkbox) => {
 /*****************************************************/
 /******************** Run on Load ********************/
 /*****************************************************/
+
+// Imports generated page
+const importButton = document.getElementById("importButton");
+const importFile = document.getElementById("importFile");
+
+importButton.addEventListener("click", () => importFile.click());
+
+importFile.addEventListener("change", () => {
+  const file = importFile.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const text = reader.result;
+
+    // Extracts JSON stored in HTML
+    const match = text.match(/<!--LINKFREE_DATA([\s\S]*?)LINKFREE_DATA-->/);
+    if (!match) {
+      alert("Este arquivo não contém dados para importar.");
+      return;
+    }
+
+    const json = JSON.parse(match[1].trim());
+
+    // Fill the fields
+    [
+      "name",
+      "url",
+      "description",
+      "email",
+      "theme"
+    ].forEach(key => {
+      const input = document.getElementById(key);
+      if (input) input.value = json[key] ?? "";
+    });
+
+    // Restore "useusername"
+    Object.entries(json.useusername ?? {}).forEach(([k, v]) => {
+      const checkbox = document.querySelector(`#useusername\\[${k}\\]`);
+      if (checkbox) checkbox.checked = true;
+    });
+
+    // Restore links
+    Object.entries(json.links ?? {}).forEach(([i, link]) => {
+      if (!document.querySelector(`[name="links[${i}][url]"]`)) {
+        createCustomLinkFields();
+      }
+      document.querySelector(`[name="links[${i}][name]"]`).value = link.name ?? "";
+      document.querySelector(`[name="links[${i}][icon]"]`).value = link.icon ?? "";
+      document.querySelector(`[name="links[${i}][url]"]`).value = link.url ?? "";
+    });
+
+    // Restore imported photo file
+    const imgMatch = text.match(/<img[^>]+src="([^"]+)"[^>]*id="userPhoto"[^>]*>/i);
+    if (imgMatch) {
+      const base64 = imgMatch[1]; //preview shows image
+      photo = base64;
+      document.getElementById("photoBase64").value = base64; //updates hidden photo field in index.php
+    }
+
+    // Forces preview
+    UpdatePreview();
+
+  };
+
+  reader.readAsText(file);
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFormFromLocalStorage();
