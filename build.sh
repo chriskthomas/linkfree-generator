@@ -2,6 +2,9 @@
 
 set -e
 
+# Change to script dir
+cd "$(dirname "$0")"
+
 # Clean environment
 rm -rf dist
 
